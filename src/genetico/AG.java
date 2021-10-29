@@ -18,8 +18,8 @@ public class AG {
 
 	ArrayList<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
 	ArrayList<Relatorio> relatorios = new ArrayList<Relatorio>();
-	private double qlde = Double.MIN_VALUE;
-	private double max  = Double.MIN_VALUE;
+	private double melhor_Qlde = Double.MIN_VALUE;
+	//private double max  = Double.MIN_VALUE;
 	ArrayList<Desenvolvedor> melhorSolucao = new ArrayList<Desenvolvedor>();
 	
 	public AG() {
@@ -45,26 +45,34 @@ public class AG {
 	
 	//retorna o individuo mais apto
 	public Individuo get_mais_apto(Individuo lst[]){
-		return lst[get_indice_mais_apto(lst)];		
+		//indice do individuo mais apto
+		int indice = get_indice_mais_apto(lst);
+		
+		//individuo mais apto
+		return lst[indice];		
 	}
 	
 	//retorna o indice do mais apto
 	public int get_indice_mais_apto(Individuo lst[]) {
 		int indice_melhor_solucao = -1;
-		int indice = -1;
-		FuncaoObjetivo funcaoObjetivo = new FuncaoObjetivo();
-		Collection<Desenvolvedor> solLocal = new ArrayList<Desenvolvedor>();
+		int indice = 0;
+		double qlde = Double.MIN_VALUE;
+		double max  = Double.MIN_VALUE;
 		
 		for (Individuo p : lst) {
-			for (int i = 0; i < relatorios.size(); i++) {
-				for (Desenvolvedor d : this.dados.getDesenvolvedores()) {
-					if(p.genes[i] == d.getIdDesenvolvedor()) {
-						solLocal.add(d);
-						indice = i;
-						break;
+			
+			FuncaoObjetivo funcaoObjetivo = new FuncaoObjetivo();
+			Collection<Desenvolvedor> solLocal = new ArrayList<Desenvolvedor>();
+			if(p != null) {
+				for (int i = 0; i < relatorios.size(); i++) {
+					for (Desenvolvedor d : this.dados.getDesenvolvedores()) {
+						if(p.genes[i] == d.getIdDesenvolvedor()) {
+							solLocal.add(d);
+							break;
+						}
 					}
+					System.out.print(p.genes[i] + " ");
 				}
-				System.out.print(p.genes[i] + " ");
 			}
 			System.out.print("\n");
 		
@@ -75,6 +83,7 @@ public class AG {
 				this.melhorSolucao = (ArrayList<Desenvolvedor>) solLocal;
 				indice_melhor_solucao = indice;
 			}
+			indice ++;
 		}
 		return indice_melhor_solucao;
 	}

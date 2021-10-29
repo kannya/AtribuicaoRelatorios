@@ -3,10 +3,11 @@ package genetico;
 public class Main {
 	public static void main(String[] args) {
 		AG ag = new AG();
+		Individuo e;
 		int epocas = 0;
 		
 		while(true){
-			ag.get_mais_apto(ag.populacao);
+			e = ag.get_mais_apto(ag.populacao);
 			
 			ag.proxima_geracao();
 			

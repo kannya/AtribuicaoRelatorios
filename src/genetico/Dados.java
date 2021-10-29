@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import goldenBall.logica.Desenvolvedor;
+import goldenBall.logica.GestorDistribuicaoRelatorios;
 import goldenBall.logica.Relatorio;
 
 public class Dados {
-	
+	private GestorDistribuicaoRelatorios gEst = GestorDistribuicaoRelatorios.getInstancia();
 	ArrayList<Desenvolvedor>  desenvolvedores;
 	
+	//organiza os relatorios dentro dos desenvolvedores e devolve cada um dos desenvolvedores
 	public Dados(ArrayList<Desenvolvedor> des, ArrayList<Relatorio> listaRel){
 		
     	ArrayList<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
@@ -41,6 +43,10 @@ public class Dados {
 		}
 		
 		this.desenvolvedores = desenvolvedores;
+		gEst.setL_desenvolvedores(this.desenvolvedores);
+		gEst.setL_relatorios(listaRel);
+		gEst.setIdesenv();
+		gEst.setIdRel();
 	}
 
 	public ArrayList<Desenvolvedor> getDesenvolvedores() {

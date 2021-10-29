@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Individuo {
 	public int genes[];
-	ArrayList<Integer>  idsDesenvolvedores = new ArrayList<Integer>();
+	//ArrayList<Integer>  idsDesenvolvedores = new ArrayList<Integer>();
 	
 	Dados dadosGlobal;
 	
@@ -13,18 +13,17 @@ public class Individuo {
 	// len quantidade de relatorios no genes
 	// ideal para ser chamado na primeira geracao
 	@SuppressWarnings("deprecation")
-	public Individuo(int len, Dados dados) {
+	public Individuo(int qtde_rel, Dados dados) {
 		dadosGlobal = dados;
-		genes = new int[len];// as string de genes vao ter tamanho 1
-		int tmp;
-		for(int i = 0; i < len; i++){
+		genes = new int[qtde_rel];// as string de genes vao ter tamanho 1
+		int indice;
+		for(int i = 0; i < qtde_rel; i++){
 			
-			tmp = new Double(Math.random() * dados.getDesenvolvedores().size()).intValue();
+			indice = new Double(Math.random() * dados.getDesenvolvedores().size()).intValue();
 		
-			genes[i] = dados.getDesenvolvedores().get(tmp).getIdDesenvolvedor();
+			genes[i] = dados.getDesenvolvedores().get(indice).getIdDesenvolvedor();
 		}
 		
-	
 	}
 	
 	// ideal para ser chamada nas geracoes posteriores
@@ -37,7 +36,7 @@ public class Individuo {
 		mutacao(dados);
 	}
 	
-	// faz um troca da posicao entre dois genes (para evitar letras repetidas)
+	// faz um troca da posicao entre dois genes
 	public void mutacao(Dados dados){
 		int local1 = new Double(Math.random() * len_genes).intValue();
 		int local2 = new Double(Math.random() * len_genes).intValue();
@@ -50,9 +49,9 @@ public class Individuo {
 	// retorna os genes do filho (faz o cruzamento entre os pais)
 	// cruzamento mascara
 	private int[] crossover(Individuo a, Individuo b){
-		int lst[] = new int[a.len_genes];
-		int i, max = lst.length;
-		int rand_point = new Double(Math.random() * len_genes).intValue();
+		int lst[] = new int[a.genes.length];
+		int max = lst.length;
+		int rand_point = new Double(Math.random() * a.genes.length).intValue();
 		// U,B,A,T,N,F,M,S - pai 
 		// M,A,S,F,B,U,N,T - mae
 		
@@ -65,7 +64,10 @@ public class Individuo {
 		int cout_pais = 2;
 		int tmp;
 		int j;
-		for(i=0; i<max; i+=2){
+		
+		pega de 2 em 2 e o valor é impar. tem que tratar
+		
+		for(int i = 0; i < max + 1; i += 2){
 			if(cout_pais%2 == 0){// pai
 				tmp = a.genes[i];
 				j = i;

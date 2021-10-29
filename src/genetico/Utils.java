@@ -1,7 +1,7 @@
 package genetico;
 
 import java.util.Random;
-
+@Deprecated
 public class Utils {
 	
 	public static Integer rand0100(){

@@ -3,39 +3,12 @@ package genetico;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import goldenBall.classes.FuncaoObjetivo;
 import goldenBall.logica.Desenvolvedor;
 import goldenBall.logica.Relatorio;
 
 public class Dados {
 	
-	// estrutura de dados para representar as cidades
-	// um dicionario onde a chave AB -> distancia 
-	// entre a cidade A e B e o valor seria a distancia
-	
 	ArrayList<Desenvolvedor>  desenvolvedores;
-	
-	
-	String possiveis;
-	int quantidade;
-	
-	
-	// recebe a letra das duas ciadades e retorna a distancia delas
-//	public Double get_distancia(String chave){
-//		Double t;
-//		if(cidades.containsKey(chave)){
-//			t = cidades.get(chave);
-//			assert(t != null);
-//			return t;
-//		} else{
-//			// o valor deve estar invertido AB -> BA
-//			String tmp = Utils.at(chave, 1) + Utils.at(chave, 0);
-//			t = cidades.get(tmp);
-//			assert(t != null);// -ea deve ser passado como parametro para vm
-//			return t;
-//		}
-//	}
-	
 	
 	public Dados(ArrayList<Desenvolvedor> des, ArrayList<Relatorio> listaRel){
 		
@@ -68,18 +41,14 @@ public class Dados {
 		}
 		
 		this.desenvolvedores = desenvolvedores;
-	
 	}
-	
-	
+
 	public ArrayList<Desenvolvedor> getDesenvolvedores() {
 		return desenvolvedores;
 	}
 
 	public void setDesenvolvedores(ArrayList<Desenvolvedor> desenvolvedores) {
 		this.desenvolvedores = desenvolvedores;
-	}
-	
-	
+	}	
 	
 }

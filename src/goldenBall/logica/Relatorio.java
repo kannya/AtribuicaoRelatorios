@@ -12,7 +12,7 @@ public class Relatorio{
 	/**
 	 * 
 	 */
-	protected int esforco;
+	protected double esforco;
 	protected int idRelatorio;
 	protected int id;
 	protected float afinidade;
@@ -32,7 +32,7 @@ public class Relatorio{
 		return esforco;
 	}
 
-	public void setEsforco(int esforco) {
+	public void setEsforco(double esforco) {
 		this.esforco = esforco;
 	}
 

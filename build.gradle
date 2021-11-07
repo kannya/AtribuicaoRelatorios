@@ -18,3 +18,14 @@ dependencies {
    implementation files('util_iso2.jar')
     
 }
+
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'src'
+            srcDirs 'src1'
+            srcDirs 'src2'
+        }
+    }
+ }

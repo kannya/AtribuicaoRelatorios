@@ -10,7 +10,7 @@ public class ConnectionJDBC {
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			String url = "jdbc:mysql://localhost:3306/bitnami_redmine?user=kn&password=123456";
+			String url = "jdbc:mysql://localhost:3306/bitnami_redmine?user=kn&password=123456&useSSL=false";
 			conn = DriverManager.getConnection(url);
 			
 			status = "Conexao Abeta";

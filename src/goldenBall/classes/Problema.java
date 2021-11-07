@@ -7,9 +7,6 @@ import java.util.Collection;
 
 import goldenBall.algoritmo.InterfaceGoldenBall;
 import goldenBall.algoritmo.Jogador;
-import goldenBall.dao.DesenvolvedorDao;
-import goldenBall.dao.RelatorioDao;
-import goldenBall.dao.RodadaAtualDao;
 import goldenBall.help.HelpFuncao;
 import goldenBall.logica.Desenvolvedor;
 import goldenBall.logica.GestorDistribuicaoRelatorios;
@@ -74,12 +71,7 @@ public class Problema {
 	}
 	
 	public void preparar(ArrayList<Desenvolvedor> des, ArrayList<Relatorio> rel){ //5
-//		DesenvolvedorDao dao = new DesenvolvedorDao();
-//		RelatorioDao relDao = new RelatorioDao();
-//		RodadaAtualDao rodadaAtualDao = new RodadaAtualDao();
 		try {
-//			this.desenvolvedores = dao.listaDesenvolvedores(rodadaAtualDao.buscaRodadaAtual());
-//			this.relatorios = relDao.listaRelatorios();
 			this.desenvolvedores = des;
 			this.relatorios = rel;
 			this.AfinidadeMatrix();
@@ -93,7 +85,7 @@ public class Problema {
 	}
 	
 	public Jogador execute() { //11
-//		double goldenBall = this.algoritmo.execute();	
+
 		this.melhorJogador = this.algoritmo.execute();
 		
 //		System.out.println("O melhor jogador tem uma qualidade de " + this.melhorJogador.getQualidade());

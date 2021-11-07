@@ -21,7 +21,7 @@ public class FuncaoObjetivo extends FuncaoAvaliacao {
 		int i = 0;
 		for (Desenvolvedor j : jogador) {
 			ArrayList<Relatorio> rel = new ArrayList<Relatorio>(j.getRelatorios());		
-			rel.get(i);
+//			rel.get(i);
 			somaAfinidades += rel.get(i).getAfinidade();
 			i++;
 		}
@@ -45,25 +45,25 @@ public class FuncaoObjetivo extends FuncaoAvaliacao {
 		
 		media = (somaCargaTrabalho + somaEsforco) / gEst.getL_desenvolvedores().size();
 		
-//		System.out.printf("media: %.6f", media);
-		
 		int i = 0;
 		Collection<Desenvolvedor> cargaTabalhoJogador = new ArrayList<Desenvolvedor>();
 		double somaQuadrado = 0d;
 		for (Desenvolvedor j : jogador) {
 			int k = 0;
 			Desenvolvedor des = new Desenvolvedor();
-			for (Relatorio r : gEst.getL_relatorios()) {
+			for (Relatorio r : j.getRelatorios()) {
 				if(i == k) {
-					des.setIdDesenvolvedor(j.getIdDesenvolvedor());
-					des.setCargaTrabalho((int) (j.getCargaTrabalho() + r.getEsforco()));
 					if (cargaTabalhoJogador.contains(j)) {
+						//verifica se o desenvolvedor já foi atribuido para outro relatorio
 						for (Desenvolvedor d : cargaTabalhoJogador) {
 							if (j.getIdDesenvolvedor() == d.getIdDesenvolvedor()) {
-								d.setCargaTrabalho(j.getCargaTrabalho() + d.getCargaTrabalho());
+								//se sim soma as cargas de trabalho
+								d.setCargaTrabalho(d.getCargaTrabalho() + r.getEsforco());
 							}
 						}
 					}else {
+						des.setIdDesenvolvedor(j.getIdDesenvolvedor());
+						des.setCargaTrabalho(j.getCargaTrabalho() + r.getEsforco());
 						cargaTabalhoJogador.add(des);
 					}
 

@@ -15,7 +15,7 @@ import interfacesUsuarioGB.Resultados;
 import interfacesUsuarioGB.Treinamento;
 import util.observer.local.LocalObservable;
 
-public class AlgorithmCallerGB extends Thread implements Runnable, ILocalObservable {
+public class AtribuirRelatoriosGB extends Thread implements Runnable, ILocalObservable {
 	
 	private LocalObservable observable;
 	private String numExecucoes;
@@ -29,12 +29,13 @@ public class AlgorithmCallerGB extends Thread implements Runnable, ILocalObserva
 	public static void main(String[] args) { //1
 		Treinamento.obtTreinamentos().reiniciarValores();
     	//numero de execucoes, qtde temporada, qtde times, qtde jogadores por time
-		t = new AlgorithmCallerGB("60", "10", "4", "12");
+//		t = new AlgorithmCallerGB("60", "10", "4", "12");
+		t = new AtribuirRelatoriosGB("60", "10", "8", "6");
     	t.start();
 	}
 	
 	//(numero, temporada, times, jogadores) 
-	public AlgorithmCallerGB(String n, String t, String tm, String p){ //2
+	public AtribuirRelatoriosGB(String n, String t, String tm, String p){ //2
 		observable = new LocalObservable();
 		this.melhorJogador = new Jogador();
 		
@@ -106,7 +107,7 @@ public class AlgorithmCallerGB extends Thread implements Runnable, ILocalObserva
 		}
 		
 		System.out.println("\n\n\nO melhor jogador tem uma qualidade de " + this.melhorJogador.getQualidade());
-		System.out.println("Melhor Jogador: " + this.melhorJogador.getGenes());
+//		System.out.println("Melhor Jogador: " + this.melhorJogador.getGenes());
 		System.out.println("Melhor Solução: " + melhorSolucao);
 		
 		//buscar relatorios
@@ -118,7 +119,8 @@ public class AlgorithmCallerGB extends Thread implements Runnable, ILocalObserva
 				idRelatorio = (ArrayList<Relatorio>) this.melhorJogador.getGenes().get(r).getRelatorios();
 				
 				System.out.println("Relatorio: " + idRelatorio.get(r).getIdRelatorio() + " - " 
-				+ "Desenvolvedor: " + this.melhorSolucao.get(r));
+						+ "Desenvolvedor: " + this.melhorSolucao.get(r)+ " - "
+						+ "Esforço: " + idRelatorio.get(r).getEsforco());
 				
 				atribuicaoDao.atribuirDesenvolvedor(idRelatorio.get(r).getIdRelatorio(), this.melhorSolucao.get(r));			
 				atribuicaoDao.mudarStatusAtribuido(idRelatorio.get(r).getIdRelatorio());

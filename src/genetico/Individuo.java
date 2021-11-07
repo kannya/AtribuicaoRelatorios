@@ -2,6 +2,12 @@ package genetico;
 
 import java.util.ArrayList;
 
+import goldenBall.algoritmo.FuncaoHelp;
+import goldenBall.algoritmo.Jogador;
+import goldenBall.funcoesSucessorasRandomicas.FuncaoSucessora_Opt2;
+import goldenBall.help.HelpFuncao;
+import goldenBall.logica.Desenvolvedor;
+
 public class Individuo {
 	public int genes[];
 	//ArrayList<Integer>  idsDesenvolvedores = new ArrayList<Integer>();
@@ -33,13 +39,13 @@ public class Individuo {
 		assert pai.genes.length == mae.genes.length;
 		len_genes = pai.len_genes;
 		genes = crossover(pai, mae);
-		mutacao(dados);
+		mutacao();
 	}
 	
 	// faz um troca da posicao entre dois genes
-	public void mutacao(Dados dados){
-		int local1 = new Double(Math.random() * len_genes).intValue();
-		int local2 = new Double(Math.random() * len_genes).intValue();
+	public void mutacao(){
+		int local1 = new Double(Math.random() * genes.length).intValue();
+		int local2 = new Double(Math.random() * genes.length).intValue();
 
 		int tmp = genes[local1];
 		genes[local1] = genes[local2];
@@ -47,51 +53,26 @@ public class Individuo {
 	}
 	
 	// retorna os genes do filho (faz o cruzamento entre os pais)
-	// cruzamento mascara
+	/**
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	private int[] crossover(Individuo a, Individuo b){
-		int lst[] = new int[a.genes.length];
-		int max = lst.length;
-		int rand_point = new Double(Math.random() * a.genes.length).intValue();
-		// U,B,A,T,N,F,M,S - pai 
-		// M,A,S,F,B,U,N,T - mae
-		
-		// filho
-		// X,X,|X,X,|X,X,|X,X
-		//  p    m     p   m
-		
-		// dois de cima do pai
-		// anda dois, dois de baixo da mae se ja tiver pega do pai
-		int cout_pais = 2;
-		int tmp;
-		int j;
-		
-		pega de 2 em 2 e o valor é impar. tem que tratar
-		
-		for(int i = 0; i < max + 1; i += 2){
-			if(cout_pais%2 == 0){// pai
-				tmp = a.genes[i];
-				j = i;
-				
-				lst[i] = tmp;
-				tmp = a.genes[i+1];
-				j = i+1;
-				
-				lst[i+1] = tmp;
-				
-			} else {// mae
-				tmp = b.genes[i];
-				j = i;
-				
-				lst[i] = tmp;
-				
-				tmp = b.genes[i+1];
-				j = i + 1;
-				
-				lst[i+1] = tmp;
-			}
-			cout_pais++;
+
+		assert a.genes.length == b.genes.length;
+		int[] solucao = new int[b.genes.length];
+		int[] segundaMetade = b.genes;
+
+		for(int i = 0; i < b.genes.length/2; i++){
+			solucao[i] = a.genes[i];
 		}
-		return lst;
+		
+		for (int j = b.genes.length/2; j < segundaMetade.length; j++) {
+			solucao[j] = segundaMetade[j];
+		}
+
+		return solucao;
+		
 	}
-	
 }

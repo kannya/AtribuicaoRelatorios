@@ -1,9 +1,7 @@
 package genetico;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
-import goldenBall.algoritmo.Jogador;
 import goldenBall.classes.FuncaoObjetivo;
 import goldenBall.dao.DesenvolvedorDao;
 import goldenBall.dao.RelatorioDao;
@@ -18,9 +16,9 @@ public class AG {
 
 	ArrayList<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
 	ArrayList<Relatorio> relatorios = new ArrayList<Relatorio>();
-	private double melhor_Qlde = Double.MIN_VALUE;
+	public double melhor_Qlde = Double.MIN_VALUE;
 	//private double max  = Double.MIN_VALUE;
-	ArrayList<Desenvolvedor> melhorSolucao = new ArrayList<Desenvolvedor>();
+	public ArrayList<Desenvolvedor> melhorSolucao = new ArrayList<Desenvolvedor>();
 	
 	public AG() {
 		
@@ -58,11 +56,12 @@ public class AG {
 		int indice = 0;
 		double qlde = Double.MIN_VALUE;
 		double max  = Double.MIN_VALUE;
+		ArrayList<Desenvolvedor> melhorSolLocal = new ArrayList<Desenvolvedor>();
 		
 		for (Individuo p : lst) {
 			
 			FuncaoObjetivo funcaoObjetivo = new FuncaoObjetivo();
-			Collection<Desenvolvedor> solLocal = new ArrayList<Desenvolvedor>();
+			ArrayList<Desenvolvedor> solLocal = new ArrayList<Desenvolvedor>();
 			if(p != null) {
 				for (int i = 0; i < relatorios.size(); i++) {
 					for (Desenvolvedor d : this.dados.getDesenvolvedores()) {
@@ -71,19 +70,23 @@ public class AG {
 							break;
 						}
 					}
-					System.out.print(p.genes[i] + " ");
+//					System.out.print(p.genes[i] + " ");
 				}
 			}
-			System.out.print("\n");
+//			System.out.print("\n");
 		
 			qlde = funcaoObjetivo.avaliacao(solLocal);
 	
 			if(qlde > max){
 				max = qlde;
-				this.melhorSolucao = (ArrayList<Desenvolvedor>) solLocal;
+				melhorSolLocal = solLocal;
 				indice_melhor_solucao = indice;
 			}
 			indice ++;
+		}
+		if( max > melhor_Qlde) {
+			melhor_Qlde = max;
+			this.melhorSolucao = melhorSolLocal;
 		}
 		return indice_melhor_solucao;
 	}
@@ -110,6 +113,13 @@ public class AG {
 		
 		return to_return;
 	}
+	
+	// retorna dois individuos
+		public Individuo[] roleta(){
+			
+			
+			return null;
+		}
 	
 	public void proxima_geracao(){
 		Individuo prox_populacao[] = new Individuo[quantidade];

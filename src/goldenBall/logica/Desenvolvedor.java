@@ -14,7 +14,7 @@ public class Desenvolvedor{
 	/**
 	 * 
 	 */
-	protected int cargaTrabalho;
+	protected double cargaTrabalho;
 	protected float afinidade;
 	protected int idRelatorio;
 	protected int idDesenvolvedor;
@@ -38,11 +38,11 @@ public class Desenvolvedor{
 	}
 
 	//getters y setters	
-	public int getCargaTrabalho() {
+	public double getCargaTrabalho() {
 		return cargaTrabalho;
 	}
 
-	public void setCargaTrabalho(int cargaTrabalho) {
+	public void setCargaTrabalho(double cargaTrabalho) {
 		this.cargaTrabalho = cargaTrabalho;
 	}
 

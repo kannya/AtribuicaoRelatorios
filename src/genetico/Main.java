@@ -15,5 +15,7 @@ public class Main {
 			if(epocas == 50)break;
 			
 		}
+		System.out.println("melhor solução: " + ag.melhorSolucao);
+		System.out.println("melhor qualidade: " + ag.melhor_Qlde);
 	}
 }

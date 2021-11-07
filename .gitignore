@@ -1,0 +1,18 @@
+*.class
+.project
+.classpath
+/.settings/org.eclipse.jdt.core.prefs
+/.gradle
+/build
+
+# Package Files #
+*.ucd
+/app/sigaa.ear/lib.jar/*
+/app/sigaa.ear/lib/*
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+/bin

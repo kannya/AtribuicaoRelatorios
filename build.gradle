@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+dependencies {
+   // implementation "joda-time:joda-time:2.2"
+ 
+   // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+   implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.47'
+   
+    
+}

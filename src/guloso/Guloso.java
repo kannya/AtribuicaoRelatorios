@@ -44,7 +44,6 @@ public class Guloso {
 			double melhor_afinidade = Double.MIN_VALUE;
 			for (Desenvolvedor d : dados.getDesenvolvedores()) {
 				for (Relatorio rel : d.getRelatorios()) {
-				//	System.out.println("Desenvolvedor: " + d.getIdDesenvolvedor() + " - " + rel.getAfinidade());
 					if (r.getIdRelatorio() == rel.getIdRelatorio() && rel.getAfinidade() > melhor_afinidade) {
 						sol = d;
 						melhor_afinidade = rel.getAfinidade();
@@ -54,8 +53,6 @@ public class Guloso {
 
 			}
 			solucao.add(sol);
-	//		System.out.println("Melhor Solução (A): " + sol);
-	//		System.out.println("Melhor Afinidade: " + melhor_afinidade);
 		}
 	}
 	
@@ -67,22 +64,11 @@ public class Guloso {
 
 			for (Desenvolvedor d : dados.getDesenvolvedores()) {
 				if (d.getCargaTrabalho() < menorCargaTrabalho) {
-
-					System.out.println("Desenvolvedor: " + d.getIdDesenvolvedor() + " - " + d.getCargaTrabalho());
-
-					for (Relatorio rel : d.getRelatorios()) {
-						if (r.getIdRelatorio() ==  rel.getIdRelatorio()) {
-							menorCargaTrabalho = d.getCargaTrabalho();
-							d.setCargaTrabalho(menorCargaTrabalho + rel.getEsforco());
-							sol = d;
-							break;
-						}
-					}
+					menorCargaTrabalho = d.getCargaTrabalho();
+					sol = d;
 				}
-
 			}
-			solucao.add(sol);
-			System.out.println("Melhor Solução (CT): " + sol);
+			sol.setCargaTrabalho(menorCargaTrabalho + r.getEsforco());
 		}
 	}
 	

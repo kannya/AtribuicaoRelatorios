@@ -115,11 +115,11 @@ public class AG {
 	}
 	
 	// retorna dois individuos
-		public Individuo[] roleta(){
+	public Individuo[] roleta(){
 			
-			
-			return null;
-		}
+		
+		return null;
+	}
 	
 	public void proxima_geracao(){
 		Individuo prox_populacao[] = new Individuo[quantidade];

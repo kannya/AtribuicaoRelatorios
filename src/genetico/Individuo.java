@@ -2,23 +2,17 @@ package genetico;
 
 import java.util.ArrayList;
 
-import goldenBall.algoritmo.FuncaoHelp;
-import goldenBall.algoritmo.Jogador;
-import goldenBall.funcoesSucessorasRandomicas.FuncaoSucessora_Opt2;
-import goldenBall.help.HelpFuncao;
+import goldenBall.classes.FuncaoObjetivo;
 import goldenBall.logica.Desenvolvedor;
+import goldenBall.logica.Relatorio;
 
 public class Individuo {
 	public int genes[];
-	//ArrayList<Integer>  idsDesenvolvedores = new ArrayList<Integer>();
-	
 	Dados dadosGlobal;
-	
 	int len_genes;
 	
 	// len quantidade de relatorios no genes
 	// ideal para ser chamado na primeira geracao
-	@SuppressWarnings("deprecation")
 	public Individuo(int qtde_rel, Dados dados) {
 		dadosGlobal = dados;
 		genes = new int[qtde_rel];// as string de genes vao ter tamanho 1
@@ -38,8 +32,12 @@ public class Individuo {
 		Individuo mae = lst[1];
 		assert pai.genes.length == mae.genes.length;
 		len_genes = pai.len_genes;
-		genes = crossover(pai, mae);
+		genes = cruzamento_torneio(pai, mae);
 		mutacao();
+	}
+	
+	public Individuo() {
+		
 	}
 	
 	// faz um troca da posicao entre dois genes
@@ -58,7 +56,7 @@ public class Individuo {
 	 * @param b
 	 * @return
 	 */
-	private int[] crossover(Individuo a, Individuo b){
+	public int[] cruzamento_torneio(Individuo a, Individuo b){
 
 		assert a.genes.length == b.genes.length;
 		int[] solucao = new int[b.genes.length];
@@ -75,4 +73,29 @@ public class Individuo {
 		return solucao;
 		
 	}
+	
+	public double individuoFitness(ArrayList<Desenvolvedor> solLocal) {
+		FuncaoObjetivo funcaoObjetivo = new FuncaoObjetivo(); 
+		double qlde = 0.0;
+		qlde = funcaoObjetivo.avaliacao(solLocal);
+		return qlde;
+	}
+	
+	public ArrayList<Desenvolvedor> solucao(Individuo s, ArrayList<Relatorio> rel, Dados d) {
+
+		ArrayList<Desenvolvedor> solLocal = new ArrayList<Desenvolvedor>();
+		if(s != null) {
+			for (int i = 0; i < rel.size(); i++) {
+				for (Desenvolvedor des : d.getDesenvolvedores()) {
+					if(s.genes[i] == des.getIdDesenvolvedor()) {
+						solLocal.add(des);
+						break;
+					}
+				}
+			}
+		}
+		return solLocal;
+	}
+	
+	
 }

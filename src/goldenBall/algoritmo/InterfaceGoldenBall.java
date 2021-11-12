@@ -178,7 +178,7 @@ public class InterfaceGoldenBall implements ILocalObservable{
 		treinamentos.add((double)this.TreinamPerson);
 		treinamentos.add((double)this.numTreinamento);
 		this.notifyLocalObservers(treinamentos);
-		System.out.println();
+//		System.out.println();
 //		System.out.println("Melhor Solução: " + this.goldenBallCerimonia().getQualidade());
 		
 		return this.goldenBallCerimonia();
@@ -251,7 +251,7 @@ public class InterfaceGoldenBall implements ILocalObservable{
 	}
 
 	private void intercambiarJogador(int i, int j) { //24
-		System.out.println("Uma troca de equipe " + this.liga.get(i).getNome() + " para o jogador " + this.liga.get(i).getJogadores().get(j).getNome());
+//		System.out.println("Uma troca de equipe " + this.liga.get(i).getNome() + " para o jogador " + this.liga.get(i).getJogadores().get(j).getNome());
 		
 		int timeIndice = new Double(Math.random() * this.liga.size()).intValue();
 		while(timeIndice == i){
@@ -282,7 +282,7 @@ public class InterfaceGoldenBall implements ILocalObservable{
 		for(int i = liga.size()/2; i < liga.size();i++){
 			int indice1 = new Double(Math.random() * (DataBase.funcoes.length)).intValue();
 			
-			System.out.println(DataBase.funcoes[indice1].toString());
+//			System.out.println(DataBase.funcoes[indice1].toString());
 			
 			liga.get(i).setModoTreinamento(DataBase.funcoes[indice1]);
 		}

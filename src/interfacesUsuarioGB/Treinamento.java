@@ -35,8 +35,8 @@ public class Treinamento extends JPanel implements Observer{
 			this.mediaTreinamentosPersonalizados = this.mediaTreinamentosPersonalizados + l.get(0);
 			this.mediaTreinamentos = this.mediaTreinamentos + l.get(1);
 			
-			System.out.println("Média de Treinamentos Personalizado: " + (mediaTreinamentosPersonalizados)/this.execucao);
-			System.out.println("Média de Treinamentos: " + (mediaTreinamentos)/this.execucao);
+//			System.out.println("Média de Treinamentos Personalizado: " + (mediaTreinamentosPersonalizados)/this.execucao);
+//			System.out.println("Média de Treinamentos: " + (mediaTreinamentos)/this.execucao);
 		}
 		
 	}

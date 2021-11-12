@@ -2,10 +2,6 @@ package genetico;
 
 import java.util.ArrayList;
 
-import goldenBall.dao.DesenvolvedorDao;
-import goldenBall.dao.RelatorioDao;
-import goldenBall.dao.RodadaAtualDao;
-import goldenBall.logica.Desenvolvedor;
 import goldenBall.logica.Relatorio;
 
 public class AG {

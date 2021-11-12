@@ -4,7 +4,6 @@ package forcaBruta.logica;
 import java.util.ArrayList;
 
 import forcaBruta.algoritmo.Solucao;
-import goldenBall.dao.AtribuicaoRelatoriosDao;
 import goldenBall.dao.DesenvolvedorDao;
 import goldenBall.dao.RelatorioDao;
 import goldenBall.dao.RodadaAtualDao;
@@ -62,7 +61,6 @@ public class AlgoritmoForcaBruta extends Thread implements Runnable {
 		System.out.println("Melhor ids: " + idsDesenvolvedores);
 		
 		//buscar relatorios
-		AtribuicaoRelatoriosDao atribuicaoDao = new AtribuicaoRelatoriosDao();
 		ArrayList<Relatorio> idRelatorio = new ArrayList<Relatorio>();
 		
 		try {
@@ -71,10 +69,6 @@ public class AlgoritmoForcaBruta extends Thread implements Runnable {
 				
 				System.out.println("Relatório: " + idRelatorio.get(r).getIdRelatorio() + " - " 
 						+ "Desenvolvedor: " + this.idsDesenvolvedores.get(r));
-				
-//				atribuicaoDao.atribuirDesenvolvedor(idRelatorio.get(r).getIdRelatorio(), this.idsDesenvolvedores.get(r));			
-//				atribuicaoDao.mudarStatusAtribuido(idRelatorio.get(r).getIdRelatorio());
-//				atribuicaoDao.mudarStatusIssues(idRelatorio.get(r).getIdRelatorio());
 			}
 			
 		}finally {

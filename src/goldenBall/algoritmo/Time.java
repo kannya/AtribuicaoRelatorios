@@ -155,7 +155,7 @@ public class Time implements Comparable{
 		this.modoTreinamento = modoTreinamento;
 		this.candidatoTreinamento = this.modoTreinamento.getNeighboor(this.jogadores.get(0).getGenes().size());
 		
-		System.out.println(candidatoTreinamento + " é a vizinhança de " + this.getModoTreinamento().toString());
+		//System.out.println(candidatoTreinamento + " é a vizinhança de " + this.getModoTreinamento().toString());
 	}
 
 	//Função para calcular a força de cada equipe, para isso faz a média dos 10 melhores jogadores do elenco

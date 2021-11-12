@@ -24,7 +24,7 @@ public class RelatorioDao {
 		    while(rs.next()){
 		    	int id = rs.getInt("id");
 		    	int idRelatorio = rs.getInt("id_relatorio");
-		        int esforco = rs.getInt("esforco");
+		        Double esforco = rs.getDouble("esforco");
 
 		        relatorios.add(new Relatorio(id, idRelatorio, esforco));
 		    }

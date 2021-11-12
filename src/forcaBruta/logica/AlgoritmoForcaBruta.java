@@ -38,6 +38,7 @@ public class AlgoritmoForcaBruta extends Thread implements Runnable {
 		DesenvolvedorDao dao = new DesenvolvedorDao();
 		RelatorioDao relDao = new RelatorioDao();
 		RodadaAtualDao rodadaAtualDao = new RodadaAtualDao();
+		double qlde = 0.0;
 		
 		try {
 			desenvolvedores = dao.listaDesenvolvedores(rodadaAtualDao.buscaRodadaAtual());
@@ -54,7 +55,10 @@ public class AlgoritmoForcaBruta extends Thread implements Runnable {
 			idsDesenvolvedores.add(sol.getIdDesenvolvedor());
 		}
 		
+		qlde = funcaoSolucao.getMaxQlde();
+		
 		System.out.println("A melhor solucao: " + this.melhorSolucao);
+		System.out.println("A melhor qualidade: " + qlde);
 		System.out.println("Melhor ids: " + idsDesenvolvedores);
 		
 		//buscar relatorios
@@ -68,9 +72,9 @@ public class AlgoritmoForcaBruta extends Thread implements Runnable {
 				System.out.println("Relatório: " + idRelatorio.get(r).getIdRelatorio() + " - " 
 						+ "Desenvolvedor: " + this.idsDesenvolvedores.get(r));
 				
-				atribuicaoDao.atribuirDesenvolvedor(idRelatorio.get(r).getIdRelatorio(), this.idsDesenvolvedores.get(r));			
-				atribuicaoDao.mudarStatusAtribuido(idRelatorio.get(r).getIdRelatorio());
-				atribuicaoDao.mudarStatusIssues(idRelatorio.get(r).getIdRelatorio());
+//				atribuicaoDao.atribuirDesenvolvedor(idRelatorio.get(r).getIdRelatorio(), this.idsDesenvolvedores.get(r));			
+//				atribuicaoDao.mudarStatusAtribuido(idRelatorio.get(r).getIdRelatorio());
+//				atribuicaoDao.mudarStatusIssues(idRelatorio.get(r).getIdRelatorio());
 			}
 			
 		}finally {

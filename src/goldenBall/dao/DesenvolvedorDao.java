@@ -25,8 +25,8 @@ public class DesenvolvedorDao {
 		    while(rs.next()){
 		    	int idDesenvolvedor = rs.getInt("id_usuario");
 		    	int idRelatorio = rs.getInt("id_relatorio");
-		    	float afinidade = rs.getFloat("afinidade");
-		        int cargaTrabalho = rs.getInt("carga_trabalho");
+		    	double afinidade = rs.getDouble("afinidade");
+		        double cargaTrabalho = rs.getDouble("carga_trabalho");
 
 		        desenvolvedores.add(new Desenvolvedor(idDesenvolvedor, idRelatorio, afinidade, cargaTrabalho));
 		    }

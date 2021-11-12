@@ -4,35 +4,20 @@ import java.util.ArrayList;
 
 import genetico.Dados;
 import goldenBall.classes.FuncaoObjetivo;
-import goldenBall.dao.DesenvolvedorDao;
-import goldenBall.dao.RelatorioDao;
-import goldenBall.dao.RodadaAtualDao;
 import goldenBall.logica.Desenvolvedor;
 import goldenBall.logica.Relatorio;
 
 public class Guloso {
 
-	ArrayList<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
 	ArrayList<Relatorio> relatorios = new ArrayList<Relatorio>();
 	ArrayList<Desenvolvedor> solucao = new ArrayList<Desenvolvedor>();
 	Dados dados;
 		
-	public Guloso() {
+	public Guloso(Dados d, ArrayList<Relatorio> rel) {
+		dados = d;
+		relatorios = rel;
 		
-		DesenvolvedorDao dao = new DesenvolvedorDao();
-		RelatorioDao relDao = new RelatorioDao();
-		RodadaAtualDao rodadaAtualDao = new RodadaAtualDao();
-		
-		try {
-			desenvolvedores = dao.listaDesenvolvedores(rodadaAtualDao.buscaRodadaAtual());
-			relatorios = relDao.listaRelatorios();		
-		}finally {
-			
-		}
-		
-		dados = new Dados(desenvolvedores, relatorios);
-		
-		//solucaoMelhorAfinidade();
+//		solucaoMelhorAfinidade();
 		
 		solucaoMenorCargaTrabalho();
 	
@@ -69,6 +54,7 @@ public class Guloso {
 				}
 			}
 			sol.setCargaTrabalho(menorCargaTrabalho + r.getEsforco());
+			solucao.add(sol);
 		}
 	}
 	

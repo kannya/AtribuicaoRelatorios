@@ -47,25 +47,34 @@ public class Problema {
 	public void AfinidadeMatrix() { //6
 		Collection<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
 		for (Desenvolvedor d1 : this.desenvolvedores) {
-			Desenvolvedor des = new Desenvolvedor();
-			Collection<Relatorio> relatorios = new ArrayList<Relatorio>();
-			for (Desenvolvedor d2 : this.desenvolvedores) {
-				if (d1.getIdDesenvolvedor() == d2.getIdDesenvolvedor()) {
-					Relatorio r = new Relatorio();
-					r.setIdRelatorio(d2.getIdRelatorio());
-					r.setAfinidade(d2.getAfinidade());
-					relatorios.add(r);
+			if(!desenvolvedores.contains(d1)) {
+				Desenvolvedor des = new Desenvolvedor();
+				Collection<Relatorio> relatorios = new ArrayList<Relatorio>();
+				for (Desenvolvedor d2 : this.desenvolvedores) {
+					if (d1.getIdDesenvolvedor() == d2.getIdDesenvolvedor()) {
+						Relatorio r = new Relatorio();
+						for(Relatorio rel : this.relatorios) {
+							if(rel.getIdRelatorio() == d2.getIdRelatorio()) {
+								r.setEsforco(rel.getEsforco());
+								r.setIdRelatorio(d2.getIdRelatorio());
+								r.setAfinidade(d2.getAfinidade());
+								relatorios.add(r);
+								break;
+							}
+						}
+					}
+				}
+				
+				des = d1;
+				des.setIdRelatorio(0);
+				des.setAfinidade(0);
+				des.setRelatorios(relatorios);
+				if(!desenvolvedores.contains(des)) {
+					desenvolvedores.add(des);
 				}
 			}
-			
-			des = d1;
-			des.setIdRelatorio(0);
-			des.setAfinidade(0);
-			des.setRelatorios(relatorios);
-			if(!desenvolvedores.contains(des)) {
-				desenvolvedores.add(des);
-			}
 		}
+			
 		
 		this.desenvolvedores = desenvolvedores;
 	}

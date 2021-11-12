@@ -12,24 +12,14 @@ public class AG {
 	public Individuo[] populacao;
 	Dados dados;
 	int quantidade = 40;
-
-	ArrayList<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
 	ArrayList<Relatorio> relatorios = new ArrayList<Relatorio>();
 	
-	public AG() {
+	public AG(Dados d, ArrayList<Relatorio> rel) {
 		
-		DesenvolvedorDao dao = new DesenvolvedorDao();
-		RelatorioDao relDao = new RelatorioDao();
-		RodadaAtualDao rodadaAtualDao = new RodadaAtualDao();
+		dados = d;
+		relatorios = rel;
 		
-		try {
-			desenvolvedores = dao.listaDesenvolvedores(rodadaAtualDao.buscaRodadaAtual());
-			relatorios = relDao.listaRelatorios();		
-		}finally {
-			
-		}
 		populacao = new Individuo[quantidade];
-		dados = new Dados(desenvolvedores, relatorios);
 		
 		// inicializa o array de Individuo
 		for(int i = 0; i < quantidade; i++){

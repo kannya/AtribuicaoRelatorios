@@ -25,23 +25,19 @@ public class Solucao{
 	//armazena a permutacao corrente
 	private Integer[] sol;
 	
-	//armazena todas as solucoes possiveis
-	private ArrayList<ArrayList<Integer>> listaSolucoes;
-	
 	//guarda a melhor solucuao
 	private ArrayList<Desenvolvedor> melhorSolucao;
 	
 	private ArrayList<Desenvolvedor> desenvolvedores;
 	
 	private double qlde = Double.MIN_VALUE;
-	private double max = Double.MIN_VALUE;
+	private double maxQlde = Double.MIN_VALUE;
 
 	/**
 	 * metodo principal: recebe o vetor cujos elementos que serao permutados
 	 * @param vet
 	 */
 	public ArrayList<Desenvolvedor> permuta(ArrayList<Relatorio> relatorios, ArrayList<Desenvolvedor> desenvolvedores) {
-		listaSolucoes = new ArrayList<ArrayList<Integer>>();
 		preparar(desenvolvedores, relatorios);
 		
 		int qtdeRel = gEst.getL_relatorios().size();
@@ -59,8 +55,6 @@ public class Solucao{
 		
 		permuta(qtdeRel, idsDesenvolvedores, 0);
 		
-//		calcularQualidade(qtdeRel);
-		
 		return melhorSolucao;
 	}
 
@@ -72,10 +66,18 @@ public class Solucao{
 	 * @param n
 	 */
 	private void permuta(int qtdeRel, int[] idsDesenvolvedores, int n) {
+		/*sol[0] = 72;
+		sol[1] = 1;
+		sol[2] = 72;		
+		sol[3] = 1;
+		sol[4] = 77;
+		sol[5] = 68;
+		sol[6] = 164;
+		
+		calcularQualidade(sol, qtdeRel);*/
 		
 		if (n == qtdeRel) {
 			cont++;
-//			montarListaSoucoes(qtdeRel);
 			calcularQualidade(sol, qtdeRel);
 		} else {
 
@@ -88,22 +90,6 @@ public class Solucao{
 		} //--if/else
 		
 	} //--permuta
-
-
-	/** imprime a permutacao corrente */
-//	private void montarListaSoucoes(int qtdeRel) {
-//		ArrayList<Integer> s = new ArrayList<Integer>();
-//		
-//		System.out.println();
-//		System.out.print("(" + cont + ") : ");
-//		for (int i = 0; i < sol.length; i++) {
-//			s.add(sol[i]);
-//			System.out.print(sol[i] + " ");
-//		}
-//		
-//		listaSolucoes.add(s);
-//		
-//	} //--imprime
 
 	public void preparar(ArrayList<Desenvolvedor> des, ArrayList<Relatorio> rel){
 		try {
@@ -121,62 +107,36 @@ public class Solucao{
 	public void OrganizarRelatoriosDesevolvedores(ArrayList<Relatorio> listaRel){
 		ArrayList<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
 		for (Desenvolvedor d1 : this.desenvolvedores) {
-			Desenvolvedor desenvolvedor = new Desenvolvedor();
-			Collection<Relatorio> relatorios = new ArrayList<Relatorio>();
-			for (Desenvolvedor d2 : this.desenvolvedores) {
-				if (d1.getIdDesenvolvedor() == d2.getIdDesenvolvedor()) {
-					Relatorio r = new Relatorio();
-					for(Relatorio rel : listaRel) {
-						if(rel.getIdRelatorio() == d2.getIdRelatorio()) {
-							r.setEsforco(rel.getEsforco());
-							r.setIdRelatorio(d2.getIdRelatorio());
-							r.setAfinidade(d2.getAfinidade());
-							relatorios.add(r);
-							break;
+			if(!desenvolvedores.contains(d1)) {
+				Desenvolvedor desenvolvedor = new Desenvolvedor();
+				Collection<Relatorio> relatorios = new ArrayList<Relatorio>();
+				for (Desenvolvedor d2 : this.desenvolvedores) {
+					if (d1.getIdDesenvolvedor() == d2.getIdDesenvolvedor()) {
+						Relatorio r = new Relatorio();
+						for(Relatorio rel : listaRel) {
+							if(rel.getIdRelatorio() == d2.getIdRelatorio()) {
+								r.setEsforco(rel.getEsforco());
+								r.setIdRelatorio(d2.getIdRelatorio());
+								r.setAfinidade(d2.getAfinidade());
+								relatorios.add(r);
+								break;
+							}
 						}
 					}
 				}
-			}
-			
-			desenvolvedor = d1;
-			desenvolvedor.setIdRelatorio(0);
-			desenvolvedor.setAfinidade(0);
-			desenvolvedor.setRelatorios(relatorios);
-			if(!desenvolvedores.contains(desenvolvedor)) {
-				desenvolvedores.add(desenvolvedor);
+				
+				desenvolvedor = d1;
+				desenvolvedor.setIdRelatorio(0);
+				desenvolvedor.setAfinidade(0);
+				desenvolvedor.setRelatorios(relatorios);
+				if(!desenvolvedores.contains(desenvolvedor)) {
+					desenvolvedores.add(desenvolvedor);
+				}
 			}
 		}
 		
 		this.desenvolvedores = desenvolvedores;
 	}
-	
-//	public void calcularQualidade(int qtdeRel) {
-//		double qlde = Double.MIN_VALUE;
-//		double max = Double.MIN_VALUE;
-//		FuncaoObjetivo funcaoObjetivo = new FuncaoObjetivo();
-//		
-//		for (ArrayList<Integer> lista : listaSolucoes) {
-//			Collection<Desenvolvedor> solLocal = new ArrayList<Desenvolvedor>();
-//			for (int i = 0; i < qtdeRel; i++) {
-//				for (Desenvolvedor d : gEst.getL_desenvolvedores()) {
-//					if(lista.get(i) == d.getIdDesenvolvedor()) {
-//						solLocal.add(d);
-//						break;
-//					}
-//				}
-//			}
-//
-//			qlde = funcaoObjetivo.avaliacao(solLocal);
-//		    	
-//			if(qlde > max){
-//				max = qlde;
-//				this.melhorSolucao = (ArrayList<Desenvolvedor>) solLocal;
-//			}
-//	    		
-//		}
-//		
-//		System.out.println("\n\n\nO melhor jogador tem uma qualidade de " + max);
-//	}
 	
 	public void calcularQualidade(Integer[] solucao, int qtdeRel) {
 
@@ -193,14 +153,28 @@ public class Solucao{
 			System.out.print(solucao[i] + " ");
 			
 		}
-		System.out.print("\n");
+//		for (Desenvolvedor des : solLocal) {
+//			System.out.println(des.getRelatorios());
+//		}
 		
 		qlde = funcaoObjetivo.avaliacao(solLocal);
 
-		if(qlde > max){
-			max = qlde;
+		if(qlde > maxQlde){
+			maxQlde = qlde;
 			this.melhorSolucao = (ArrayList<Desenvolvedor>) solLocal;
 		}
+		
+		System.out.print(" - " + maxQlde + "\n");
 	}
+
+	public double getMaxQlde() {
+		return maxQlde;
+	}
+
+
+	public void setMaxQlde(double maxQlde) {
+		this.maxQlde = maxQlde;
+	}
+
 	
 }

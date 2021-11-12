@@ -105,8 +105,8 @@ public class AlgorithmCallerGB extends Thread implements Runnable, ILocalObserva
 			melhorSolucao.add(sol.getIdDesenvolvedor());
 		}
 		
-		System.out.println("\n\n\nO melhor jogador tem uma qualidade de " + this.melhorJogador.getQualidade());
 		System.out.println("Melhor Jogador: " + this.melhorJogador.getGenes());
+		System.out.println("\n\n\nO melhor jogador tem uma qualidade de " + this.melhorJogador.getQualidade());
 		System.out.println("Melhor Solução: " + melhorSolucao);
 		
 		//buscar relatorios
@@ -117,12 +117,12 @@ public class AlgorithmCallerGB extends Thread implements Runnable, ILocalObserva
 			for(int r = 0; r < relatorios.size(); r++) {
 				idRelatorio = (ArrayList<Relatorio>) this.melhorJogador.getGenes().get(r).getRelatorios();
 				
-				System.out.println("Relatorio: " + idRelatorio.get(r).getIdRelatorio() + " - " 
+				System.out.println("Relatório: " + idRelatorio.get(r).getIdRelatorio() + " - " 
 				+ "Desenvolvedor: " + this.melhorSolucao.get(r));
 				
-				atribuicaoDao.atribuirDesenvolvedor(idRelatorio.get(r).getIdRelatorio(), this.melhorSolucao.get(r));			
-				atribuicaoDao.mudarStatusAtribuido(idRelatorio.get(r).getIdRelatorio());
-				atribuicaoDao.mudarStatusIssues(idRelatorio.get(r).getIdRelatorio());
+//				atribuicaoDao.atribuirDesenvolvedor(idRelatorio.get(r).getIdRelatorio(), this.melhorSolucao.get(r));			
+//				atribuicaoDao.mudarStatusAtribuido(idRelatorio.get(r).getIdRelatorio());
+//				atribuicaoDao.mudarStatusIssues(idRelatorio.get(r).getIdRelatorio());
 			}
 			
 		}finally {

@@ -15,13 +15,13 @@ public class Desenvolvedor{
 	 * 
 	 */
 	protected double cargaTrabalho;
-	protected float afinidade;
+	protected double afinidade;
 	protected int idRelatorio;
 	protected int idDesenvolvedor;
 	protected int id;
 	protected Collection<Relatorio> relatorios;
 	
-	public Desenvolvedor(int idDesenvolvedor, int idRelatorio, float afinidade, int cargaTrabalho) {
+	public Desenvolvedor(int idDesenvolvedor, int idRelatorio, double afinidade, double cargaTrabalho) {
 		super();
 		this.idDesenvolvedor = idDesenvolvedor;
 		this.idRelatorio = idRelatorio;
@@ -46,11 +46,11 @@ public class Desenvolvedor{
 		this.cargaTrabalho = cargaTrabalho;
 	}
 
-	public float getAfinidade() {
+	public double getAfinidade() {
 		return afinidade;
 	}
 
-	public void setAfinidade(float afinidade) {
+	public void setAfinidade(double afinidade) {
 		this.afinidade = afinidade;
 	}
 

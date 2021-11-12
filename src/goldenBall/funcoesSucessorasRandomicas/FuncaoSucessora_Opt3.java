@@ -35,15 +35,11 @@ public class FuncaoSucessora_Opt3 extends FuncaoSucessoraRandomica{
 		//OBTEMOS O PRIMEIRO E SEGUNDO INDICE
 		i = new Double(Math.random() * (estadoInicial.size())).intValue();		
 		j = new Double(Math.random() * (estadoInicial.size())).intValue();		
-//		if(estadoInicial.size() >= 4) {
-			while(j == i || j == i-1 || j == i+1){
-				j = new Double(Math.random() * (estadoInicial.size())).intValue();
-			}
-//		}else {
-//			while(j == i) {
-//				j = new Double(Math.random() * (estadoInicial.size())).intValue();
-//			}
-//		}
+
+		while(j == i || j == i-1 || j == i+1){
+			j = new Double(Math.random() * (estadoInicial.size())).intValue();
+		}
+
 		
 		//OS ORDENAMOS		
 		if (j < i){
@@ -53,15 +49,9 @@ public class FuncaoSucessora_Opt3 extends FuncaoSucessoraRandomica{
 		}
 		//OBTEMOS O TERCEIRO INDICE
 		k = new Double(Math.random() * (estadoInicial.size())).intValue();		
-//		if(estadoInicial.size() >= 7) {
-			while(k == i || k == i-1 || k == i+1 || k == j || k == j-1 || k == j+1){
-				k = new Double(Math.random() * (estadoInicial.size())).intValue();
-			}
-//		}else {
-//			while(k == i || k == j) {
-//				k = new Double(Math.random() * (estadoInicial.size())).intValue();
-//			}
-//		}
+		while(k == i || k == i-1 || k == i+1 || k == j || k == j-1 || k == j+1){
+			k = new Double(Math.random() * (estadoInicial.size())).intValue();
+		}
 		
 		//ORDENAMOS TODOS OS INDICES
 		if (k < j){

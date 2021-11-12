@@ -2,31 +2,53 @@ package genetico;
 
 import java.util.ArrayList;
 
+import goldenBall.dao.DesenvolvedorDao;
+import goldenBall.dao.RelatorioDao;
+import goldenBall.dao.RodadaAtualDao;
 import goldenBall.logica.Desenvolvedor;
+import goldenBall.logica.Relatorio;
 
 public class Main {
 	
 	public static void main(String[] args) {
-		AG ag = new AG();
-		Individuo[] populacao = ag.populacao;
-		SelecaoTorneio torneio = new SelecaoTorneio(populacao, ag.relatorios, ag.dados);
+		
 		Individuo e;
 		int epocas = 0;
-		double melhor_Qlde = Double.MIN_VALUE;
+		double melhorQlde = Double.MIN_VALUE;
 		ArrayList<Desenvolvedor> melhorSolucao = new ArrayList<Desenvolvedor>();
+		ArrayList<Integer> idsDesenvolvedores;
+		ArrayList<Relatorio> idRelatorio;
+		ArrayList<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
+		ArrayList<Relatorio> relatorios = new ArrayList<Relatorio>();
+		Dados dados;
 
+		DesenvolvedorDao dao = new DesenvolvedorDao();
+		RelatorioDao relDao = new RelatorioDao();
+		RodadaAtualDao rodadaAtualDao = new RodadaAtualDao();
+		
+		try {
+			desenvolvedores = dao.listaDesenvolvedores(rodadaAtualDao.buscaRodadaAtual());
+			relatorios = relDao.listaRelatorios();		
+		}finally {
+			
+		}
+		
+		dados = new Dados(desenvolvedores, relatorios);
+		
+		AG ag = new AG(dados, relatorios);
+		Individuo[] populacao = ag.populacao;
+		SelecaoTorneio torneio = new SelecaoTorneio(populacao, relatorios, dados);
+		
 		while(true){
 			//selecao torneio
-			/*e = torneio.get_mais_apto(ag.populacao);
-			ag.proxima_geracao_torneio();
-			*/
+//			ag.proxima_geracao_torneio();
 			
 			//selecao roleta
 			populacao = ag.proxima_geracao_roleta();
 			e = torneio.get_mais_apto(populacao);
 			
-			if(melhor_Qlde < torneio.melhor_Qlde) {
-				melhor_Qlde = torneio.melhor_Qlde;
+			if(melhorQlde < torneio.melhor_Qlde) {
+				melhorQlde = torneio.melhor_Qlde;
 				melhorSolucao = torneio.melhorSolucao;
 			}
 			
@@ -36,7 +58,21 @@ public class Main {
 			System.out.println("melhor solução da Rodada " + epocas + ": " + torneio.melhorSolucao);
 			System.out.println("melhor qualidade da Rodada " + epocas + ": " + torneio.melhor_Qlde);
 		}
-		System.out.println("melhor solução Final: " + melhorSolucao);
-		System.out.println("melhor qualidade Final: " + melhor_Qlde);
+		
+		idsDesenvolvedores = new ArrayList<Integer>();
+		for(Desenvolvedor sol : melhorSolucao){
+			idsDesenvolvedores.add(sol.getIdDesenvolvedor());
+		}
+		
+		System.out.println("A melhor solucao final: " + melhorSolucao);
+		System.out.println("A melhor qualidade final: " + melhorQlde);
+		System.out.println("Melhor ids: " + idsDesenvolvedores);
+		
+		for(int r = 0; r < melhorSolucao.size(); r++) {
+			idRelatorio = (ArrayList<Relatorio>) melhorSolucao.get(r).getRelatorios();
+			
+			System.out.println("Relatório: " + idRelatorio.get(r).getIdRelatorio() + " - " 
+					+ "Desenvolvedor: " + idsDesenvolvedores.get(r));
+		}
 	}
 }

@@ -21,7 +21,6 @@ public class FuncaoObjetivo extends FuncaoAvaliacao {
 		int i = 0;
 		for (Desenvolvedor j : jogador) {
 			ArrayList<Relatorio> rel = new ArrayList<Relatorio>(j.getRelatorios());		
-//			rel.get(i);
 			somaAfinidades += rel.get(i).getAfinidade();
 			i++;
 		}
@@ -31,9 +30,9 @@ public class FuncaoObjetivo extends FuncaoAvaliacao {
 	}
 	
 	public double desvioPadrao(Collection<Desenvolvedor> jogador) {
-		float somaEsforco = 0.0f;
-		float somaCargaTrabalho = 0.0f;
-		float media = 0.0f;
+		double somaEsforco = 0.0;
+		double somaCargaTrabalho = 0.0;
+		double media = 0.0;
 		
 		for (Desenvolvedor des : gEst.getL_desenvolvedores()) {
 			somaCargaTrabalho += des.getCargaTrabalho();

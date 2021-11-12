@@ -12,12 +12,12 @@ public class Relatorio{
 	/**
 	 * 
 	 */
-	protected double esforco;
+	protected Double esforco;
 	protected int idRelatorio;
 	protected int id;
-	protected float afinidade;
+	protected double afinidade;
 	
-	public Relatorio(int id, int idRelatorio, int esforco) {
+	public Relatorio(int id, int idRelatorio, double esforco) {
 		super();
 		this.id = id;
 		this.idRelatorio = idRelatorio;
@@ -52,11 +52,11 @@ public class Relatorio{
 		this.id = id;
 	}
 
-	public float getAfinidade() {
+	public double getAfinidade() {
 		return afinidade;
 	}
 
-	public void setAfinidade(float afinidade) {
+	public void setAfinidade(double afinidade) {
 		this.afinidade = afinidade;
 	}
 

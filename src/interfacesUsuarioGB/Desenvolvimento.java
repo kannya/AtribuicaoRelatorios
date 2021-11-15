@@ -34,9 +34,6 @@ public class Desenvolvimento extends JPanel implements Observer {
 	}
 	
 	private static Desenvolvimento des = new Desenvolvimento();
-//	public static Desenvolvimento obtDesenvolvimento(){
-//		return des;
-//	}
 
 	@Override
 	public void update(Observable o, Object arg) {

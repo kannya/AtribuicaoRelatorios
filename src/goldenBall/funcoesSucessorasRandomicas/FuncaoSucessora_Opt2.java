@@ -25,15 +25,9 @@ public class FuncaoSucessora_Opt2 extends FuncaoSucessoraRandomica{
 		
 		j = new Double(Math.random() * (estadoInicial.size())).intValue();
 		
-//		if(estadoInicial.size() >= 4) {
-			while(j == i || j == i-1 || j == i+1){
-				j = new Double(Math.random() * (estadoInicial.size())).intValue();
-			}
-//		} else {
-//			while(j == i) {
-//				j = new Double(Math.random() * (estadoInicial.size())).intValue();
-//			}
-//		}
+		while(j == i || j == i-1 || j == i+1){
+			j = new Double(Math.random() * (estadoInicial.size())).intValue();
+		}
 		
 		if(i == 0 && j == estado.size()-1){
 			j = j-1;

@@ -1,9 +1,8 @@
-package forcaBruta.logica;
+package forcaBruta;
 
 
 import java.util.ArrayList;
 
-import forcaBruta.algoritmo.Solucao;
 import goldenBall.dao.DesenvolvedorDao;
 import goldenBall.dao.RelatorioDao;
 import goldenBall.dao.RodadaAtualDao;
@@ -23,7 +22,6 @@ public class AlgoritmoForcaBruta extends Thread implements Runnable {
     	t.start();
 	}
 
-	
 	public AlgoritmoForcaBruta(String n){
 		this.melhorSolucao = new ArrayList<Desenvolvedor>();
 		this.sol = new ArrayList<Desenvolvedor>();
@@ -56,26 +54,7 @@ public class AlgoritmoForcaBruta extends Thread implements Runnable {
 		
 		qlde = funcaoSolucao.getMaxQlde();
 		
-		System.out.println("A melhor solucao: " + this.melhorSolucao);
-		System.out.println("A melhor qualidade: " + qlde);
-		System.out.println("Melhor ids: " + idsDesenvolvedores);
-		
-		//buscar relatorios
-		ArrayList<Relatorio> idRelatorio = new ArrayList<Relatorio>();
-		
-		try {
-			for(int r = 0; r < relatorios.size(); r++) {
-				idRelatorio = (ArrayList<Relatorio>) this.melhorSolucao.get(r).getRelatorios();
-				
-				System.out.println("Relatório: " + idRelatorio.get(r).getIdRelatorio() + " - " 
-						+ "Desenvolvedor: " + this.idsDesenvolvedores.get(r));
-			}
-			
-		}finally {
-			
-		}		
-		
-    	System.out.println("\n\n\nFim da Execução");
+		System.out.println(this.melhorSolucao + "; " + qlde);
 	}	
 	
 }

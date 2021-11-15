@@ -1,4 +1,4 @@
-package forcaBruta.algoritmo;
+package forcaBruta;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,7 +57,6 @@ public class Solucao{
 		return melhorSolucao;
 	}
 
-
 	/**
 	 * método recursivo que implementa as permutacoes
 	 * @param relatorios
@@ -102,12 +101,7 @@ public class Solucao{
 					break;
 				}
 			}
-//			System.out.print(solucao[i] + " ");
-			
 		}
-//		for (Desenvolvedor des : solLocal) {
-//			System.out.println(des.getRelatorios());
-//		}
 		
 		qlde = funcaoObjetivo.avaliacao(solLocal);
 
@@ -116,7 +110,6 @@ public class Solucao{
 			this.melhorSolucao = (ArrayList<Desenvolvedor>) solLocal;
 		}
 		
-//		System.out.print(" - " + maxQlde + "\n");
 	}
 
 	public double getMaxQlde() {

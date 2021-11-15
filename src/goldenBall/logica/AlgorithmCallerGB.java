@@ -6,7 +6,6 @@ import java.util.Observer;
 
 import goldenBall.algoritmo.Jogador;
 import goldenBall.classes.Problema;
-import goldenBall.dao.AtribuicaoRelatoriosDao;
 import goldenBall.dao.DesenvolvedorDao;
 import goldenBall.dao.RelatorioDao;
 import goldenBall.dao.RodadaAtualDao;
@@ -72,6 +71,7 @@ public class AlgorithmCallerGB extends Thread implements Runnable, ILocalObserva
 		}
 					
     	Problema P = new Problema(desenvolvedores, relatorios);
+    	
     	while(true){		
 			for(int i = 0; i < n; i++){
 				
@@ -97,8 +97,7 @@ public class AlgorithmCallerGB extends Thread implements Runnable, ILocalObserva
 		    	l.add(Math.rint((tempoTotal/(i+1))*100)/100);
 		    	
 		    	this.notifyLocalObservers(l);
-		    	
-//		    	System.out.println("\n\n\nqualidade: " + j.getQualidade());
+		    
 	    	}
 			
 			this.melhorSolucao = new ArrayList<Integer>();
@@ -106,11 +105,7 @@ public class AlgorithmCallerGB extends Thread implements Runnable, ILocalObserva
 				melhorSolucao.add(sol.getIdDesenvolvedor());
 			}
 			
-//			System.out.println("Melhor Jogador: " + this.melhorJogador.getGenes());
-//			System.out.println("\n\n\nO melhor jogador tem uma qualidade de " + this.melhorJogador.getQualidade());
-//			System.out.println("Melhor Solução: " + melhorSolucao);
-			
-			System.out.println(epocas + "; " + this.melhorJogador.getGenes() + "; " + this.melhorJogador.getQualidade());
+			System.out.println(this.melhorJogador.getGenes() + "; " + this.melhorJogador.getQualidade());
 			
 			//buscar relatorios
 //			AtribuicaoRelatoriosDao atribuicaoDao = new AtribuicaoRelatoriosDao();
@@ -120,9 +115,6 @@ public class AlgorithmCallerGB extends Thread implements Runnable, ILocalObserva
 //				for(int r = 0; r < relatorios.size(); r++) {
 //					idRelatorio = (ArrayList<Relatorio>) this.melhorJogador.getGenes().get(r).getRelatorios();
 //					
-//					System.out.println("Relatório: " + idRelatorio.get(r).getIdRelatorio() + " - " 
-//					+ "Desenvolvedor: " + this.melhorSolucao.get(r));
-//					
 //					atribuicaoDao.atribuirDesenvolvedor(idRelatorio.get(r).getIdRelatorio(), this.melhorSolucao.get(r));			
 //					atribuicaoDao.mudarStatusAtribuido(idRelatorio.get(r).getIdRelatorio());
 //					atribuicaoDao.mudarStatusIssues(idRelatorio.get(r).getIdRelatorio());
@@ -131,8 +123,6 @@ public class AlgorithmCallerGB extends Thread implements Runnable, ILocalObserva
 //			}finally {
 //				
 //			}		
-			
-//	    	System.out.println("\n\n\nFim da Execução");
 	    	
 	    	epocas++;
 			if(epocas == 100)break;

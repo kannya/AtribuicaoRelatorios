@@ -20,6 +20,7 @@ public class Desenvolvedor{
 	protected int idDesenvolvedor;
 	protected int id;
 	protected Collection<Relatorio> relatorios;
+	protected double cargaTrabalhoAposAtribuicao;
 	
 	public Desenvolvedor(int idDesenvolvedor, int idRelatorio, double afinidade, double cargaTrabalho) {
 		super();
@@ -84,6 +85,14 @@ public class Desenvolvedor{
 
 	public void setRelatorios(Collection<Relatorio> relatorios) {
 		this.relatorios = relatorios;
+	}
+
+	public double getCargaTrabalhoAposAtribuicao() {
+		return cargaTrabalhoAposAtribuicao;
+	}
+
+	public void setCargaTrabalhoAposAtribuicao(double cargaTrabalhoAposAtribuicao) {
+		this.cargaTrabalhoAposAtribuicao = cargaTrabalhoAposAtribuicao;
 	}
 
 	public String toString() {

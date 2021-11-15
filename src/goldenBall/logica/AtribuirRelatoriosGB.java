@@ -6,7 +6,6 @@ import java.util.Observer;
 
 import goldenBall.algoritmo.Jogador;
 import goldenBall.classes.Problema;
-import goldenBall.dao.AtribuicaoRelatoriosDao;
 import goldenBall.dao.DesenvolvedorDao;
 import goldenBall.dao.RelatorioDao;
 import goldenBall.dao.RodadaAtualDao;
@@ -55,6 +54,7 @@ public class AtribuirRelatoriosGB extends Thread implements Runnable, ILocalObse
 		double tempo = 0;
 		double tempoTotal = 0;
 		int n = Integer.parseInt(numExecucoes);
+		int epocas = 0;
 		
 		ArrayList<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
 		ArrayList<Relatorio> relatorios = new ArrayList<Relatorio>();
@@ -73,63 +73,60 @@ public class AtribuirRelatoriosGB extends Thread implements Runnable, ILocalObse
 					
     	Problema P = new Problema(desenvolvedores, relatorios);
 		
-		for(int i = 0; i < n; i++){
-			
-	    	tempo = System.currentTimeMillis();
-	    	
-	    	j = P.executarInstancia(Integer.parseInt(temp), Integer.parseInt(times), Integer.parseInt(jogadores));
-	    	
-	    	tempo = System.currentTimeMillis() - tempo;
-	    	tempoTotal += tempo/1000;
-	    	total = total + j.getQualidade();
-	    	if(j.getQualidade() < min){
-				min = j.getQualidade();
-			}
-			if(j.getQualidade() > max){
-				max = j.getQualidade();
-				this.melhorJogador = j;
-			}
-	    	this.notifyLocalObservers(j.getQualidade());
-	    	ArrayList<Double> l = new ArrayList<Double>();
-	    	l.add(Math.rint((total/(i+1))*100)/100);
-	    	l.add(min);
-	    	l.add(max);
-	    	l.add(Math.rint((tempoTotal/(i+1))*100)/100);
-	    	
-	    	this.notifyLocalObservers(l);
-	    	
-//	    	System.out.println("\n\n\nqualidade: " + j.getQualidade());
+    	while(true){
+    		for(int i = 0; i < n; i++){
+
+    			tempo = System.currentTimeMillis();
+
+    			j = P.executarInstancia(Integer.parseInt(temp), Integer.parseInt(times), Integer.parseInt(jogadores));
+
+    			tempo = System.currentTimeMillis() - tempo;
+    			tempoTotal += tempo/1000;
+    			total = total + j.getQualidade();
+    			if(j.getQualidade() < min){
+    				min = j.getQualidade();
+    			}
+    			if(j.getQualidade() > max){
+    				max = j.getQualidade();
+    				this.melhorJogador = j;
+    			}
+    			this.notifyLocalObservers(j.getQualidade());
+    			ArrayList<Double> l = new ArrayList<Double>();
+    			l.add(Math.rint((total/(i+1))*100)/100);
+    			l.add(min);
+    			l.add(max);
+    			l.add(Math.rint((tempoTotal/(i+1))*100)/100);
+
+    			this.notifyLocalObservers(l);
+    		}
+
+    		this.melhorSolucao = new ArrayList<Integer>();
+    		for(Desenvolvedor sol : this.melhorJogador.getGenes()){
+    			melhorSolucao.add(sol.getIdDesenvolvedor());
+    		}
+
+    		System.out.println(this.melhorJogador.getGenes() + "; " + this.melhorJogador.getQualidade());
+
+    		//buscar relatorios
+//    		AtribuicaoRelatoriosDao atribuicaoDao = new AtribuicaoRelatoriosDao();
+//    		ArrayList<Relatorio> idRelatorio = new ArrayList<Relatorio>();
+//
+//    		try {
+//    			for(int r = 0; r < relatorios.size(); r++) {
+//    				idRelatorio = (ArrayList<Relatorio>) this.melhorJogador.getGenes().get(r).getRelatorios();
+//
+//    				atribuicaoDao.atribuirDesenvolvedor(idRelatorio.get(r).getIdRelatorio(), this.melhorSolucao.get(r));			
+//    				atribuicaoDao.mudarStatusAtribuido(idRelatorio.get(r).getIdRelatorio());
+//    				atribuicaoDao.mudarStatusIssues(idRelatorio.get(r).getIdRelatorio());
+//    			}
+//
+//    		}finally {
+//
+//    		}
+		
+		epocas++;
+		if(epocas == 100)break;
     	}
-		
-		this.melhorSolucao = new ArrayList<Integer>();
-		for(Desenvolvedor sol : this.melhorJogador.getGenes()){
-			melhorSolucao.add(sol.getIdDesenvolvedor());
-		}
-		
-//		System.out.println("\n\n\nO melhor jogador tem uma qualidade de " + this.melhorJogador.getQualidade());
-//		System.out.println("Melhor Jogador: " + this.melhorJogador.getGenes());
-//		System.out.println("Melhor Solução: " + melhorSolucao);
-		
-		//buscar relatorios
-//		AtribuicaoRelatoriosDao atribuicaoDao = new AtribuicaoRelatoriosDao();
-//		ArrayList<Relatorio> idRelatorio = new ArrayList<Relatorio>();
-//		
-//		try {
-//			for(int r = 0; r < relatorios.size(); r++) {
-//				idRelatorio = (ArrayList<Relatorio>) this.melhorJogador.getGenes().get(r).getRelatorios();
-//				
-//				System.out.println("Relatorio: " + idRelatorio.get(r).getIdRelatorio() + " - " 
-//						+ "Desenvolvedor: " + this.melhorSolucao.get(r)+ " - "
-//						+ "Esforço: " + idRelatorio.get(r).getEsforco());
-//				
-//				atribuicaoDao.atribuirDesenvolvedor(idRelatorio.get(r).getIdRelatorio(), this.melhorSolucao.get(r));			
-//				atribuicaoDao.mudarStatusAtribuido(idRelatorio.get(r).getIdRelatorio());
-//				atribuicaoDao.mudarStatusIssues(idRelatorio.get(r).getIdRelatorio());
-//			}
-//			
-//		}finally {
-//			
-//		}		
 		
     	System.out.println("\n\n\nFim da Execução");
 	}	

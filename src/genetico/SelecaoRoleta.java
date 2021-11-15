@@ -36,31 +36,6 @@ public class SelecaoRoleta {
 		return novaPopulacao;
 	}
 	
-	/*public Individuo roleta(){
-		double fitnessTotal = 0.0;
-		double qlde = 0.0;
-		Individuo ind = new Individuo();
-		ArrayList<Desenvolvedor> solLocal = new ArrayList<Desenvolvedor>();
-		
-	    fitnessTotal = popFitness();
-	    	    
-	    double rnd = Math.random();
-	    for (Individuo s : populacao) {
-	    	if(s != null) {
-	    		solLocal = ind.solucao(s, relatorios, dados);
-	    		qlde = ind.individuoFitness(solLocal);
-
-	    		double valor = (10 * qlde / fitnessTotal);
-	    		if(rnd <= valor) {
-	    			return s;
-	    		}
-	    		rnd -= valor;
-	    	}		    
-	    }
-	    return null;
-
-	}*/
-	
 	public Individuo[] roleta(){
 		double fitnessTotal = 0.0;
 		double qlde = 0.0;

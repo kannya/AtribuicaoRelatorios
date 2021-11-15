@@ -14,7 +14,7 @@ import goldenBall.logica.Desenvolvedor;
 
  */
 
-public class Time implements Comparable{
+public class Time implements Comparable<Object>{
 
 	private ArrayList<Jogador> jogadores; 
 	private double potencia;

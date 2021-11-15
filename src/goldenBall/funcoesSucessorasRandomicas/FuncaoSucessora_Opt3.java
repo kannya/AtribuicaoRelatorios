@@ -30,8 +30,6 @@ public class FuncaoSucessora_Opt3 extends FuncaoSucessoraRandomica{
 		ArrayList<Desenvolvedor> estadoInicial = (ArrayList<Desenvolvedor>)estado.clone();
 		ArrayList<Desenvolvedor> estadoFinal = new ArrayList<Desenvolvedor>();	
 		
-//		System.out.println("Estado inicial: " + estadoInicial.toString());
-		
 		//OBTEMOS O PRIMEIRO E SEGUNDO INDICE
 		i = new Double(Math.random() * (estadoInicial.size())).intValue();		
 		j = new Double(Math.random() * (estadoInicial.size())).intValue();		
@@ -40,7 +38,6 @@ public class FuncaoSucessora_Opt3 extends FuncaoSucessoraRandomica{
 			j = new Double(Math.random() * (estadoInicial.size())).intValue();
 		}
 
-		
 		//OS ORDENAMOS		
 		if (j < i){
 			aux = i;
@@ -92,12 +89,8 @@ public class FuncaoSucessora_Opt3 extends FuncaoSucessoraRandomica{
 			indice6 = k + 1;
 		}
 		
-//		System.out.println(i + " - " + j +  " - " + k + " Tamanho: " + estado.size());
-		
 		//A TROCA DE ARCO É FEITA
 		int l = new Double(Math.random() * 3).intValue();
-		
-//		System.out.println(l);
 		
 		if(l == 0){
 			indice7 = indice1;
@@ -112,23 +105,17 @@ public class FuncaoSucessora_Opt3 extends FuncaoSucessoraRandomica{
 				i++;
 			}
 			
-//			System.out.println("Então o assunto vai por agora: " + estadoFinal.toString());
-			
 			i = indice3;
 			while(i >= indice8){
 				estadoFinal.add(estadoInicial.get(i));
 				i--;
 			}
 			
-//			System.out.println("Então, o tema continua por agora: " + estadoFinal.toString());
-			
 			i = indice11;
 			while(i >= indice10){
 				estadoFinal.add(estadoInicial.get(i));
 				i--;
 			}
-			
-//			System.out.println("Então, o tema continua por agora: " + estadoFinal.toString());
 			
 			if (indice12 != 0){
 				i = indice12;
@@ -137,8 +124,6 @@ public class FuncaoSucessora_Opt3 extends FuncaoSucessoraRandomica{
 					i++;
 				}
 			}
-			
-//			System.out.println("Então, o tópico permaneceu: " + estadoFinal.toString());	
 		
 		}else if(l == 1){
 			indice7 = indice1;
@@ -153,23 +138,17 @@ public class FuncaoSucessora_Opt3 extends FuncaoSucessoraRandomica{
 				i++;
 			}
 			
-//			System.out.println("Então o assunto vai por agora: " + estadoFinal.toString());
-			
 			i = indice10;
 			while(i <= indice11){
 				estadoFinal.add(estadoInicial.get(i));
 				i++;
 			}
 			
-//			System.out.println("Então, o tema continua por agora: " + estadoFinal.toString());
-			
 			i = indice9;
 			while(i >= indice8){
 				estadoFinal.add(estadoInicial.get(i));
 				i--;
 			}
-			
-//			System.out.println("Então, o tema continua por agora: " + estadoFinal.toString());
 			
 			if (indice12 != 0){
 				i = indice12;
@@ -178,8 +157,6 @@ public class FuncaoSucessora_Opt3 extends FuncaoSucessoraRandomica{
 					i++;
 				}
 			}
-			
-//			System.out.println("Então, o tópico permaneceu: " + estadoFinal.toString());
 			
 		}else if(l == 2){
 			indice7 = indice1;
@@ -194,23 +171,17 @@ public class FuncaoSucessora_Opt3 extends FuncaoSucessoraRandomica{
 				i++;
 			}
 			
-//			System.out.println("Então o assunto vai por agora: " + estadoFinal.toString());
-			
 			i = indice11;
 			while(i >= indice10){
 				estadoFinal.add(estadoInicial.get(i));
 				i--;
 			}
 			
-//			System.out.println("Então, o tema continua por agora: " + estadoFinal.toString());
-			
 			i = indice8;
 			while(i <= indice9){
 				estadoFinal.add(estadoInicial.get(i));
 				i++;
 			}
-			
-//			System.out.println("Então, o tema continua por agora: " + estadoFinal.toString());
 			
 			if (indice12 != 0){
 				i = indice12;
@@ -219,13 +190,7 @@ public class FuncaoSucessora_Opt3 extends FuncaoSucessoraRandomica{
 					i++;
 				}
 			}
-			
-//			System.out.println("Então, o tópico permaneceu: " + estadoFinal.toString());
-			
 		}
-		
-//		System.out.println("Então, o tópico permaneceu: " + estadoFinal.toString());
-//		System.out.println("Tamanho final: " + estadoFinal.size());
 		
 		return estadoFinal;
 	}

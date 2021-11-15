@@ -1,7 +1,6 @@
 package guloso;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import genetico.Dados;
 import goldenBall.classes.FuncaoObjetivo;
@@ -13,18 +12,16 @@ public class Guloso {
 	ArrayList<Relatorio> relatorios = new ArrayList<Relatorio>();
 	ArrayList<Desenvolvedor> solucao = new ArrayList<Desenvolvedor>();
 	Dados dados;
-	private static ArrayList<Desenvolvedor> des = new ArrayList<Desenvolvedor>();
 		
 	public Guloso(Dados d, ArrayList<Relatorio> rel) {
 		dados = d;
 		relatorios = rel;
-		des = dados.getDesenvolvedores();
 		
 //		solucaoMelhorAfinidade();
 		
 //		solucaoMenorCargaTrabalho();
 		
-		solucaoMedia();
+		solucaoDivsaoAfinidadeCarga();
 	
 	}
 	
@@ -40,29 +37,44 @@ public class Guloso {
 						break;
 					}
 				}
-
 			}
 			solucao.add(sol);
 		}
 	}
 	
 	public void solucaoMenorCargaTrabalho(){
+		
+		for (Desenvolvedor d : dados.getDesenvolvedores()) {
+			d.setCargaTrabalhoAposAtribuicao(d.getCargaTrabalho());
+		}
+		
 		for (Relatorio r : relatorios) {
 			Desenvolvedor sol = new Desenvolvedor();
 			double menorCargaTrabalho = Double.MAX_VALUE;
-
+			double cargaTrabalhoTotal = 0.0;
+			int j = 0;
+			int i = 0;
+			
 			for (Desenvolvedor d : dados.getDesenvolvedores()) {
-				if (d.getCargaTrabalho() < menorCargaTrabalho) {
-					menorCargaTrabalho = d.getCargaTrabalho();
+				cargaTrabalhoTotal = d.getCargaTrabalhoAposAtribuicao() + r.getEsforco();
+				if (cargaTrabalhoTotal < menorCargaTrabalho) {
+					menorCargaTrabalho = cargaTrabalhoTotal;
 					sol = d;
+					j = i;
 				}
+				i++;
 			}
-			sol.setCargaTrabalho(menorCargaTrabalho + r.getEsforco());
+			
 			solucao.add(sol);
+			dados.getDesenvolvedores().get(j).setCargaTrabalhoAposAtribuicao(menorCargaTrabalho);
 		}
 	}
 	
-	public void solucaoMedia(){
+	public void solucaoDivsaoAfinidadeCarga(){
+		for (Desenvolvedor d : dados.getDesenvolvedores()) {
+			d.setCargaTrabalhoAposAtribuicao(d.getCargaTrabalho());
+		}
+		
 		for (Relatorio r : relatorios) {
 			Desenvolvedor sol = new Desenvolvedor();
 			double melhorMedia = Double.MIN_VALUE;
@@ -70,12 +82,12 @@ public class Guloso {
 			int j = 0;
 			int i = 0;
 			
-			for (Desenvolvedor d : des) {
+			for (Desenvolvedor d : dados.getDesenvolvedores()) {
 				double media = 0.0;
 				double cargaTrabalhoTotal = 0.0;
 				for (Relatorio relDesenv : d.getRelatorios()) {
 					if (r.getIdRelatorio() == relDesenv.getIdRelatorio()){
-						cargaTrabalhoTotal = d.getCargaTrabalho() + relDesenv.getEsforco();
+						cargaTrabalhoTotal = d.getCargaTrabalhoAposAtribuicao() + relDesenv.getEsforco();
 						media = relDesenv.getAfinidade()/cargaTrabalhoTotal;
 						if(media > melhorMedia) {
 							sol = d;
@@ -90,41 +102,9 @@ public class Guloso {
 
 			}
 			solucao.add(sol);
-			des.get(j).setCargaTrabalho(cargaTrabalhoLocal);
+			dados.getDesenvolvedores().get(j).setCargaTrabalhoAposAtribuicao(cargaTrabalhoLocal);
 		}
 	}
-	
-//	public void solucaoMedia(){
-//		for (Relatorio r : relatorios) {
-//			Desenvolvedor sol = new Desenvolvedor();
-//			double melhorMedia = Double.MIN_VALUE;
-//			double cargaTrabalhoLocal = 0.0;
-//			int j = 0;
-////			ArrayList<Desenvolvedor> des = dados.getDesenvolvedores();
-//			
-//			for (int i = 0; i < des.size(); i++) {
-//				double media = 0.0;
-//				for (Relatorio relDesenv : des.get(i).getRelatorios()) {
-//					double cargaTrabalhoTotal = 0.0;
-//					if (r.getIdRelatorio() == relDesenv.getIdRelatorio()){
-//						cargaTrabalhoTotal = des.get(i).getCargaTrabalho() + relDesenv.getEsforco();
-//						media = relDesenv.getAfinidade()/cargaTrabalhoTotal;
-//						if(media > melhorMedia) {
-//							sol = des.get(i);
-//							melhorMedia = media;
-//							cargaTrabalhoLocal = cargaTrabalhoTotal;
-//							j = i;
-//						}
-//						break;
-//					}
-//				}
-//			}
-//			
-//			solucao.add(sol);
-//			
-//			des.get(j).setCargaTrabalho(cargaTrabalhoLocal);
-//		}
-//	}
 	
 	//retorna o indice do mais apto
 	public double FuncaoFitness(ArrayList<Desenvolvedor> desenvolvedores) {

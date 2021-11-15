@@ -37,9 +37,7 @@ public class FuncaoSucessora_Swapping extends FuncaoSucessoraRandomica{
 			indice1 = indice2;
 			indice2 = aux;
 		}
-		
-//		System.out.println(indice1 + " - " + indice2);
-		
+	
 		//AGORA A TROCA É REALIZADA
 		if (estadoInicial.size() > 1) {
 			est2 = estadoInicial.remove(indice2);

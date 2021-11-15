@@ -97,5 +97,4 @@ public class Individuo {
 		return solLocal;
 	}
 	
-	
 }

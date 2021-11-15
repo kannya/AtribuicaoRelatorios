@@ -11,7 +11,7 @@ import goldenBall.logica.Desenvolvedor;
  * Esta é a classe para codificar os indivíduos da população. Neste caso serão jogadores, que farão parte de uma equipe.
  */
 
-public class Jogador implements Comparable{
+public class Jogador implements Comparable<Object>{
 	
 	private ArrayList<Desenvolvedor> genes;
 	private double qualidade;

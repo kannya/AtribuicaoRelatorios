@@ -12,7 +12,6 @@ public class GestorDistribuicaoRelatorios{
 	
 	private ArrayList<Desenvolvedor> l_desenvolvedores;
 	private ArrayList<Relatorio> l_relatorios;
-//	private Double[][] m;
 	
 	//Singleton
 
@@ -43,25 +42,6 @@ public class GestorDistribuicaoRelatorios{
 	public void setL_relatorios(ArrayList<Relatorio> lRel) {
 		this.l_relatorios = lRel;
 	}
-
-//	public Desenvolvedor getDesenvolv(double a){
-//		Desenvolvedor d = null;
-//		for (int i = 0; i < l_desenvolvedores.size(); i++){
-//			d = l_desenvolvedores.get(i);
-//			if (d.getAfinidade() == a){
-//				return d;			
-//			}		
-//		}
-//		return null;
-//	}
-	
-//	public Double[][] getM() {
-//		return m;
-//	}
-//
-//	public void setM(Double[][] m) {
-//		this.m = m;
-//	}	
 	
 	public Desenvolvedor getDesenv(int id){
 		Desenvolvedor d = null;

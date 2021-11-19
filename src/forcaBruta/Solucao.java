@@ -82,7 +82,6 @@ public class Solucao{
 			for (int i = 0; i < idsDesenvolvedores.length; i++) {
 				sol[n] = idsDesenvolvedores[i];
 				permuta(qtdeRel, idsDesenvolvedores, n + 1);
-
 			} //--for
 
 		} //--if/else
@@ -101,6 +100,7 @@ public class Solucao{
 					break;
 				}
 			}
+			
 		}
 		
 		qlde = funcaoObjetivo.avaliacao(solLocal);

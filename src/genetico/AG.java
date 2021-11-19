@@ -7,7 +7,7 @@ import goldenBall.logica.Relatorio;
 public class AG {
 	public Individuo[] populacao;
 	Dados dados;
-	int quantidade = 40;
+	int quantidade = 48;
 	ArrayList<Relatorio> relatorios = new ArrayList<Relatorio>();
 	
 	public AG(Dados d, ArrayList<Relatorio> rel) {

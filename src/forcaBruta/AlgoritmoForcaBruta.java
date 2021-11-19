@@ -36,6 +36,10 @@ public class AlgoritmoForcaBruta extends Thread implements Runnable {
 		RelatorioDao relDao = new RelatorioDao();
 		RodadaAtualDao rodadaAtualDao = new RodadaAtualDao();
 		double qlde = 0.0;
+		double tempo = 0;
+		double tempoTotal = 0;
+		
+		tempo = System.currentTimeMillis();
 		
 		try {
 			desenvolvedores = dao.listaDesenvolvedores(rodadaAtualDao.buscaRodadaAtual());
@@ -54,7 +58,13 @@ public class AlgoritmoForcaBruta extends Thread implements Runnable {
 		
 		qlde = funcaoSolucao.getMaxQlde();
 		
-		System.out.println(this.melhorSolucao + "; " + qlde);
+		tempo = System.currentTimeMillis() - tempo;
+		tempoTotal += tempo/1000;
+		
+//		System.out.println(this.melhorSolucao + "; " + qlde);
+		
+		System.out.println("\n" + qlde);
+		System.out.println(tempoTotal);
 	}	
 	
 }

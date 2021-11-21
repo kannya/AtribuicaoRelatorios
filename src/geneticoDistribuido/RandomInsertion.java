@@ -13,15 +13,15 @@ public class RandomInsertion{
 		//INICIALIZAMOS AS VARIAVEIS
 		int indice1;
 		int indice2;
-		Desenvolvedor gene;
+		Desenvolvedor genes1;
 		ArrayList<Desenvolvedor> genesInicial;
 		
 		//INICIALIZAMOS O ESTADO
-		genesInicial = (ArrayList<Desenvolvedor>) genes.clone();
-	
+		genesInicial = (ArrayList<Desenvolvedor>)genes.clone();
+		
 		//SELECIONAMOS UM NODO AO ACASO E O RECUPERAMOS. Calculamos a perda de remoção do nó do caminho
 		indice1 = new Double(Math.random() * (genesInicial.size())).intValue();
-		gene = genesInicial.remove(indice1);
+		genes1 = genesInicial.remove(indice1);
 		
 		//GENERAMOS OUTRO NUMERO AO ACASO E INSERIMOS NO NODO NO INDICE
 		indice2 = new Double(Math.random() * (genesInicial.size())).intValue();
@@ -29,7 +29,7 @@ public class RandomInsertion{
 			while(indice2 == indice1)
 				indice2 = new Double(Math.random() * (genesInicial.size())).intValue(); 
 		}
-		genesInicial.add(indice2, gene);		
+		genesInicial.add(indice2,genes1);		
 		
 		return genesInicial;
 	}

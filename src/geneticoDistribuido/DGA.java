@@ -34,7 +34,7 @@ public class DGA{
              
 		//cria nova população do mesmo tamanho da antiga
 		Subpopulacao novaPopulacao = new Subpopulacao(tamSubpopulacao);
-
+		
 		//insere novos indivíduos na nova população, até atingir o tamanho máximo
 		while (novaPopulacao.getNumIndividuos() < tamSubpopulacao) {
 			Individuo[] pais = new Individuo[2];
@@ -48,7 +48,7 @@ public class DGA{
 			//adiciona os filhos na nova geração
 			novaPopulacao.setIndividuo(filho);
 		}
-	
+		
 		//ordena a nova população
 		novaPopulacao.ordenaPopulacao();
 		return novaPopulacao;
@@ -74,24 +74,23 @@ public class DGA{
 	public Subpopulacao mutacao(Subpopulacao pop) {
 		Subpopulacao novaSubpopulacao = pop;
 		int qtdeFuncoes = 4;
-		int nMut = (int) Math.ceil(novaSubpopulacao.individuos.length);
-			    
+		int nMut = (int) Math.round(Math.random()*(novaSubpopulacao.individuos.length));
+		
 		for(int i = 0; i < nMut; i++) {
-	    	int indiceIndividuo = (int) Math.round(Math.random()*(novaSubpopulacao.individuos.length - 1));
-	    	int indiceFuncao = (int) Math.round(Math.random()*(qtdeFuncoes));
+	    	int indiceIndividuo = (int) Math.round(Math.random()*(nMut - 1));
+	    	int indiceFuncao = (int) Math.round(Math.random()*(qtdeFuncoes - 1));
 	    	ArrayList<Desenvolvedor> novoGenes = new ArrayList<Desenvolvedor>();
-	    	Individuo ind;	
-	    	
-			if(indiceFuncao == 1) {
+	    	    	
+			if(indiceFuncao == 0) {
 				Opt2 opt2 = new Opt2();
 				novoGenes = opt2.criarSucessor(novaSubpopulacao.individuos[indiceIndividuo]);
-			}else if(indiceFuncao == 2) {
+			}else if(indiceFuncao == 1) {
 				Opt3 opt3 = new Opt3();
 				novoGenes = opt3.criarSucessor(novaSubpopulacao.individuos[indiceIndividuo]);
-			}else if(indiceFuncao == 3) {
+			}else if(indiceFuncao == 2) {
 				RandomInsertion insertion = new RandomInsertion();
 				novoGenes = insertion.criarSucessor(novaSubpopulacao.individuos[indiceIndividuo]);
-			}else if(indiceFuncao == 4) {
+			}else if(indiceFuncao == 3) {
 				Swapping swapping = new Swapping();
 				novoGenes = swapping.criarSucessor(novaSubpopulacao.individuos[indiceIndividuo]);
 			}
@@ -99,6 +98,7 @@ public class DGA{
 			novaSubpopulacao.individuos[indiceIndividuo] = new Individuo(novoGenes);
 
 	    }
+		
 		novaSubpopulacao.ordenaPopulacao();
 	    return novaSubpopulacao;
 

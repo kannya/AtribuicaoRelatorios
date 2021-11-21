@@ -17,6 +17,8 @@ public class Main {
 		double tempoTotal = 0;
 		double soma = 0;
 		double melhorQlde = Double.MIN_VALUE;
+		double melhorQldeResultado = Double.MIN_VALUE;
+		double somaResultado = 0;
 		int qtdeSubPopulacao = 4;
 		int qtdeIndividuos = 48;
 		ArrayList<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
@@ -36,7 +38,7 @@ public class Main {
 	
 		dados = new Dados(desenvolvedores, relatorios);
 			
-		while(true){
+//		while(true){
 			int tamSubPopulacao = qtdeIndividuos/qtdeSubPopulacao;
 			Individuo e;
 			int geracao = 0;
@@ -49,45 +51,54 @@ public class Main {
 			tempo = System.currentTimeMillis();
 			populacao = dga.populacao;
 			
+			System.out.println("Melhor Aptidao por geracao");
+			
 			//enquanto o critério de para não for atingido
 			while(true){
+					
 				//para cada subpopulacao
 				for (int i = 0; i < qtdeSubPopulacao; i++) {
 					Subpopulacao novaPopulacao = new Subpopulacao(tamSubPopulacao);
-										
+					
 					//cria nova populacao
 					novaPopulacao = dga.novaGeracao(populacao[i]);
 					
 					//passar colecao de individuos devolve uma nova subpopulacao
 					novaPopulacao = dga.mutacao(novaPopulacao);
-					
+
 					//garante que o melhor individo(solucao) estara na proxima subpopulacao
 					populacao[i] = dga.sobrevivente(populacao[i], novaPopulacao);
-					
+
 					if(melhorQlde < populacao[i].individuos[0].aptidao) {
 						melhorQlde = populacao[i].individuos[0].aptidao;
 					}
 				}
 				
+				soma += melhorQlde;
+				
 				dga.migracao(populacao);
-
+				
+				System.out.println(melhorQlde);
+				
 				geracao++;
 				if(geracao == 10)break;
-
+				
 			}
 			
+			somaResultado += melhorQldeResultado;
 			
 			tempo = System.currentTimeMillis() - tempo;
 			tempoTotal += tempo/1000;
 
-			repetir++;
-			if(repetir == 20)break;
-
-			System.out.println(melhorQlde);
-		
-		}
-		System.out.println("\n" + soma/repetir);
-		System.out.println("\n" + tempoTotal);
+			System.out.println("\nmédia geracao");
+			System.out.println(soma/geracao);
+				
+//			repetir++;
+//			if(repetir == 20)break;
+//		
+//		}
+		System.out.println("\ntempo total");
+		System.out.println(tempoTotal);
 	}
 
 }

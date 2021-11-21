@@ -19,7 +19,7 @@ public class Opt2{
 		int aux = 0;
 		ArrayList<Desenvolvedor> genesInicial = (ArrayList<Desenvolvedor>) genes.clone();
 		ArrayList<Desenvolvedor> genesFinal = new ArrayList<Desenvolvedor>();
-		
+
 		//GERAMOS OS DOIS NÚMEROS ALEATÓRIOS
 		i = new Double(Math.random() * (genesInicial.size())).intValue();
 		

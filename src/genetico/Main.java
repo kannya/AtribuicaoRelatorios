@@ -16,8 +16,6 @@ public class Main {
 		double tempoTotal = 0;
 		double soma = 0;
 		double melhorQlde = Double.MIN_VALUE;
-//		ArrayList<Integer> idsDesenvolvedores;
-//		ArrayList<Desenvolvedor> melhorSolucao = new ArrayList<Desenvolvedor>();
 		ArrayList<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
 		ArrayList<Relatorio> relatorios = new ArrayList<Relatorio>();
 		Dados dados;
@@ -35,7 +33,7 @@ public class Main {
 
 		dados = new Dados(desenvolvedores, relatorios);
 			
-		while(true){
+//		while(true){
 
 			Individuo e;
 			int epocas = 0;
@@ -56,11 +54,12 @@ public class Main {
 				
 				if(melhorQlde < torneio.melhor_Qlde) {
 					melhorQlde = torneio.melhor_Qlde;
-//					melhorSolucao = torneio.melhorSolucao;
 				}
 								
 				epocas++;
 				if(epocas == 10)break;
+				
+				soma += melhorQlde;
 			}
 			
 			soma += melhorQlde;
@@ -69,17 +68,11 @@ public class Main {
 			tempoTotal += tempo/1000;
 						
 			repetir++;
-			if(repetir == 20)break;
-			
-//			idsDesenvolvedores = new ArrayList<Integer>();
-//			for(Desenvolvedor sol : melhorSolucao){
-//				idsDesenvolvedores.add(sol.getIdDesenvolvedor());
-//			}
-			
-//			System.out.println(idsDesenvolvedores + "; " +melhorQlde);
+//			if(repetir == 20)break;
+
 			System.out.println(melhorQlde);
 		
-		}
+//	}
 		System.out.println("\n" + soma/repetir);
 		System.out.println("\n" + tempoTotal);
 	}

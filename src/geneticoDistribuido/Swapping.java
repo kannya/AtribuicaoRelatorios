@@ -14,12 +14,12 @@ public class Swapping{
 		int indice1;
 		int indice2;
 		int aux;
-		Desenvolvedor gene1;
-		Desenvolvedor gene2;
-		ArrayList<Desenvolvedor> genesInicial = new ArrayList<Desenvolvedor>();
-		
+		Desenvolvedor est1;
+		Desenvolvedor est2;
+		ArrayList<Desenvolvedor> genesInicial;
+
 		//OS DOIS ÍNDICES SÃO GERADOS PARA FAZER A TROCA E O NOVO ESTADO É REGENERADO
-		genesInicial = (ArrayList<Desenvolvedor>) genes.clone();
+		genesInicial = (ArrayList<Desenvolvedor>)genes.clone();
 		indice1 = 0;
 		indice2 = 0;
 		indice1 = new Double(Math.random() * (genesInicial.size())).intValue();
@@ -37,15 +37,15 @@ public class Swapping{
 			indice1 = indice2;
 			indice2 = aux;
 		}
-				
+
 		//AGORA A TROCA É REALIZADA
 		if (genesInicial.size() > 1) {
-			gene2 = genesInicial.remove(indice2);
-			gene1 = genesInicial.remove(indice1);
-			genesInicial.add(indice1, gene2);
-			genesInicial.add(indice2, gene1);
+			est2 = genesInicial.remove(indice2);
+			est1 = genesInicial.remove(indice1);
+			genesInicial.add(indice1, est2);
+			genesInicial.add(indice2, est1);
 		}
-		
+
 		return genesInicial;
-	}	
+	}
 }

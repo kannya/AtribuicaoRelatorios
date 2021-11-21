@@ -26,11 +26,11 @@ public class Individuo {
 		geraAptidao(genes);
 	}
 
-	public Individuo(ArrayList<Desenvolvedor> individuo) {
-		genes.addAll(individuo);
+	public Individuo(ArrayList<Desenvolvedor> novoGenes) {
+		genes.addAll(novoGenes);
 		aptidao = 0.0;
 		
-		geraAptidao(individuo);
+		geraAptidao(genes);
 	}
 
 	public static Individuo cruzamento(Individuo a, Individuo b) {

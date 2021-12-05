@@ -96,7 +96,7 @@ public class Desenvolvedor{
 	}
 
 	public String toString() {
-		String result = "[" + this.idDesenvolvedor + ", " + this.idRelatorio + ", " + this.afinidade + ", " + this.cargaTrabalho + "] ";
+		String result = "" + this.idDesenvolvedor;
 		
 		return result;
  	}

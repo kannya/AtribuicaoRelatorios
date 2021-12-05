@@ -27,13 +27,12 @@ public class AtribuirRelatoriosGB extends Thread implements Runnable, ILocalObse
 
 	public static void main(String[] args) { //1
 		Treinamento.obtTreinamentos().reiniciarValores();
-    	//numero de execucoes, qtde temporada, qtde times, qtde jogadores por time
+    	//numero de iteracoes, qtde temporada, qtde times, qtde jogadores por time
 //		versão 1	2times	24jogadores por time
 //		versão 2	4times	12jogadores por time
 //		versão 3	6times	8jogadores por time
 //		versão 4	8times	6jogadores por time
-//		t = new AtribuirRelatoriosGB("100", "10", "10", "8");
-		t = new AtribuirRelatoriosGB("20", "10", "8", "6");
+		t = new AtribuirRelatoriosGB("100", "10", "8", "6");
     	t.start();
 	}
 	
@@ -53,12 +52,14 @@ public class AtribuirRelatoriosGB extends Thread implements Runnable, ILocalObse
 	@Override
 	public void run(){ //3
 		double min = Double.MAX_VALUE;
-		double max = Double.MIN_VALUE;
 		double total = 0;
 		double tempo = 0;
 		double tempoTotal = 0;
-		double soma = 0;
 		int n = Integer.parseInt(numExecucoes);
+		ArrayList<Double> tempoMedio = new ArrayList<Double>();
+		ArrayList<Double> listaAptidaoResultados = new ArrayList<Double>();
+		ArrayList<Double> listaAptidaoIteracoes;
+		int execucoes = 0;
 		
 		ArrayList<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
 		ArrayList<Relatorio> relatorios = new ArrayList<Relatorio>();
@@ -76,39 +77,70 @@ public class AtribuirRelatoriosGB extends Thread implements Runnable, ILocalObse
 		}
 					
     	Problema P = new Problema(desenvolvedores, relatorios);
-		
-    	for(int i = 0; i < n; i++){
+    	
+    	while(true){
+    		double max = Double.MIN_VALUE;
 
-    		tempo = System.currentTimeMillis();
-
-    		j = P.executarInstancia(Integer.parseInt(temp), Integer.parseInt(times), Integer.parseInt(jogadores));
-
-    		tempo = System.currentTimeMillis() - tempo;
-    		tempoTotal += tempo/1000;
-    		total = total + j.getQualidade();
+    		listaAptidaoIteracoes = new ArrayList<Double>();
     		
-    		if(j.getQualidade() < min){
-    			min = j.getQualidade();
+
+    		for(int i = 0; i < n; i++){
+
+    			tempo = System.currentTimeMillis();
+
+    			j = P.executarInstancia(Integer.parseInt(temp), Integer.parseInt(times), Integer.parseInt(jogadores));
+
+    			tempo = System.currentTimeMillis() - tempo;
+    			tempoTotal += tempo/1000;
+    			total = total + j.getQualidade();
+
+    			if(j.getQualidade() < min){
+    				min = j.getQualidade();
+    			}
+    			if(j.getQualidade() > max){
+    				max = j.getQualidade();
+    				this.melhorJogador = j;
+    			}
+
+    			this.notifyLocalObservers(j.getQualidade());
+    			ArrayList<Double> l = new ArrayList<Double>();
+    			l.add(Math.rint((total/(i+1))*100)/100);
+    			l.add(min);
+    			l.add(max);
+    			l.add(Math.rint((tempoTotal/(i+1))*100)/100);
+
+    			this.notifyLocalObservers(l);
+    			
+    			listaAptidaoIteracoes.add(max);
+
     		}
-    		if(j.getQualidade() > max){
-    			max = j.getQualidade();
-    			this.melhorJogador = j;
+
+    		System.out.println("\nValores Iteracoes - " + execucoes);
+    		for (int j1 = 0; j1 < listaAptidaoIteracoes.size(); j1++) {
+    			System.out.println(listaAptidaoIteracoes.get(j1));
     		}
     		
-    		soma += this.melhorJogador.getQualidade();
+    		System.out.println("\nMelhor Jogador: " + this.melhorJogador.getGenes());
     		
-    		this.notifyLocalObservers(j.getQualidade());
-    		ArrayList<Double> l = new ArrayList<Double>();
-    		l.add(Math.rint((total/(i+1))*100)/100);
-    		l.add(min);
-    		l.add(max);
-    		l.add(Math.rint((tempoTotal/(i+1))*100)/100);
+    		System.out.println("\nTempo Iteracoes");
+    		System.out.println(tempoTotal);
 
-    		this.notifyLocalObservers(l);
+    		listaAptidaoResultados.add(max);
 
-    		System.out.println(this.melhorJogador.getQualidade());
+    		execucoes++;
+    		if(execucoes == 20)break;//quantidade de execuções do código(cada pessoa rodou uma vez)
+
     	}
 
+    	System.out.println("\nValores Resultados");
+    	for (int k = 0; k < listaAptidaoResultados.size(); k++) {
+    		System.out.println(listaAptidaoResultados.get(k));
+    	}
+
+    	System.out.println("\nTempo Resultados");
+    	System.out.println(tempoTotal/execucoes);
+
+	
 //    		this.melhorSolucao = new ArrayList<Integer>();
 //    		for(Desenvolvedor sol : this.melhorJogador.getGenes()){
 //    			melhorSolucao.add(sol.getIdDesenvolvedor());
@@ -135,11 +167,11 @@ public class AtribuirRelatoriosGB extends Thread implements Runnable, ILocalObse
 //
 //    		}
 		
-//		epocas++;
-//		if(epocas == 100)break;
+//		execucoes++;
+//		if(execucoes == 100)break;
 //    	}
-    		System.out.println("\n" + soma/n);
-    	System.out.println("\n" + tempoTotal);
+//    		System.out.println("\n" + soma/n);
+//    	System.out.println("\n" + tempoTotal);
 	}	
 	
     public void addLocalObserver(Observer observer) {

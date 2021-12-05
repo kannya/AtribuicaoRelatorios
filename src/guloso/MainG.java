@@ -9,12 +9,10 @@ import goldenBall.dao.RodadaAtualDao;
 import goldenBall.logica.Desenvolvedor;
 import goldenBall.logica.Relatorio;
 
-public class Main {
+public class MainG {
 	public static void main(String[] args) {
-//		ArrayList<Integer> idsDesenvolvedores;
 		ArrayList<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
 		ArrayList<Relatorio> relatorios = new ArrayList<Relatorio>();
-		ArrayList<Desenvolvedor> melhorSolucaoFinal = new ArrayList<Desenvolvedor>();
 		Dados dados;
 		double tempo = 0;
 		double tempoTotal = 0;
@@ -42,17 +40,8 @@ public class Main {
 
 		qldeSol = guloso.FuncaoFitness(melhorSolucao);
 
-		melhorSolucaoFinal = melhorSolucao;
-
-//		idsDesenvolvedores = new ArrayList<Integer>();
-//		
-//		for(Desenvolvedor sol : melhorSolucaoFinal){
-//			idsDesenvolvedores.add(sol.getIdDesenvolvedor());
-//		}
 		tempo = System.currentTimeMillis() - tempo;
 		tempoTotal += tempo/1000;
-		
-//		System.out.println(idsDesenvolvedores + "; " + qldeSol);
 		
 		System.out.println(qldeSol);
 		System.out.println("\n" + tempoTotal);

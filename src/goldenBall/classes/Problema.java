@@ -41,13 +41,7 @@ public class Problema {
 	}
 	
 	public Jogador execute() { //11
-
 		this.melhorJogador = this.algoritmo.execute();
-		
-//		System.out.println("O melhor jogador tem uma qualidade de " + this.melhorJogador.getQualidade());
-		
-//		System.out.println("Melhor Jogador: " + this.melhorJogador.getGenes());
-		
 		return this.melhorJogador;
 	}
 	

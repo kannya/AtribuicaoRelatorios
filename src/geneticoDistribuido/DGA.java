@@ -133,15 +133,13 @@ public class DGA{
 	}
 	
 	public void migracao(Subpopulacao[] populacao) {
-			Individuo imigrante1 = populacao[0].individuos[0];
-			Individuo imigrante2 = populacao[1].individuos[0];
-			Individuo imigrante3 = populacao[2].individuos[0];
-			Individuo imigrante4 = populacao[3].individuos[0];
-			
-			populacao[0].individuos[11] = imigrante4;
-			populacao[1].individuos[11] = imigrante1;
-			populacao[2].individuos[11] = imigrante2;
-			populacao[3].individuos[11] = imigrante3;
+		int tamInd = populacao[0].individuos.length;
+		int tamPop = populacao.length;
+		populacao[0].individuos[tamInd - 1] = populacao[tamPop - 1].individuos[0];
+		
+		for (int i = 1; i < populacao.length; i++) {
+			populacao[i].individuos[tamInd - 1] = populacao[i-1].individuos[0];
+		}
 		
 	}
 		

@@ -75,6 +75,17 @@ public class FuncaoSucessora_Opt2 extends FuncaoSucessoraRandomica{
 			i++;
 		}
 		
+//		System.out.println("estado inicial");
+//		for (int cont = 0; cont < estadoInicial.size(); cont++) {
+//			System.out.print(estadoInicial.get(cont) + "; ");
+//		}
+//		
+//		System.out.println("\nestado final");
+//		for (int cont1 = 0; cont1 < estadoFinal.size(); cont1++) {
+//			System.out.print(estadoFinal.get(cont1) + "; ");
+//		}
+			
+		
 		return estadoFinal;
 				
 	}

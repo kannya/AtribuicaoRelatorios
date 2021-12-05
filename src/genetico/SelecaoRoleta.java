@@ -11,8 +11,9 @@ public class SelecaoRoleta {
 	ArrayList<Relatorio> relatorios;
 	Individuo[] populacao;
 	Dados dados;
-	private double txSelecao = .50; // % da população que vai sobreviver à próxima geração (através da seleção)
-	private double txMutacao = .10; // % da população corrente que vai sofrer mutacão
+	private double txSelecao = .8; // % da população que vai sobreviver à próxima geração (através da seleção)
+	private double txMutacao = .2; // % da população corrente que vai sofrer mutacão
+//	private double txCross = .003; // % da população corrente que vai sofrer mutacão
 	
 	public SelecaoRoleta(Individuo[] pop, ArrayList<Relatorio> rel, Dados d) {
 		relatorios = rel;
@@ -90,6 +91,24 @@ public class SelecaoRoleta {
 	}
 	
 	public Individuo[] cruzamento_roleta(Individuo[] pop) {
+	    int numSel = (int)Math.ceil(pop.length * txSelecao); // número de indivíduos que foram selecionados
+	    int dif = 1; // diferenca entre posição entre os pais
+	    int pos = 0; // começa do primeiro elemento selecionado
+	    Individuo ind = new Individuo();
+	    
+	    for(int i = numSel; i < pop.length; i++){
+	        int[] filho = ind.cruzamento_torneio(pop[pos], pop[pos + dif]);
+	        pop[i].genes = filho; // adicionado à nova população
+	        pos++; // incrementando a posição no vetor
+	        if(pos > numSel - dif) {// implica que não vai ter parceiro, então ... 
+	            pos = 0; // reinicia do primeiro elemento
+	            dif++; // incrementa a diferença de posição entre pais a se cruzarem
+	        }
+	    }
+	    return pop;
+	}
+	
+	public Individuo[] cruzamento(Individuo[] pop) {
 	    int numSel = (int)Math.ceil(pop.length * txSelecao); // número de indivíduos que foram selecionados
 	    int dif = 1; // diferenca entre posição entre os pais
 	    int pos = 0; // começa do primeiro elemento selecionado

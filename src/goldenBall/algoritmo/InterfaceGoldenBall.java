@@ -126,7 +126,7 @@ public class InterfaceGoldenBall implements ILocalObservable{
 		 * FASE INTERMEDIARIA
 		 * 
 		 */
-		//O processo é repetido para cada estação
+		//O processo é repetido para cada temporada
 		int i = 0;
 		do{
 			//Os pontos de todas as equipes são zerados primeiro

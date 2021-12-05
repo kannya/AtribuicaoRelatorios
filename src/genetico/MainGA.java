@@ -8,16 +8,16 @@ import goldenBall.dao.RodadaAtualDao;
 import goldenBall.logica.Desenvolvedor;
 import goldenBall.logica.Relatorio;
 
-public class Main {
+public class MainGA {
 	
 	public static void main(String[] args) {
-		int repetir = 0;
-		double tempo = 0;
+		int execucoes = 0;
 		double tempoTotal = 0;
-		double soma = 0;
-		double melhorQlde = Double.MIN_VALUE;
+		double tempo = 0;
 		ArrayList<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
 		ArrayList<Relatorio> relatorios = new ArrayList<Relatorio>();
+		ArrayList<Double> listaAptidaoIteracoes;
+		ArrayList<Double> listaAptidaoResultados = new ArrayList<Double>();
 		Dados dados;
 
 		DesenvolvedorDao dao = new DesenvolvedorDao();
@@ -33,18 +33,24 @@ public class Main {
 
 		dados = new Dados(desenvolvedores, relatorios);
 			
-//		while(true){
+		while(true){
 
 			Individuo e;
-			int epocas = 0;
-			AG ag = new AG(dados, relatorios);
+			int geracao = 0;
+			double melhorQlde = Double.MIN_VALUE;
 			
-			tempo = System.currentTimeMillis();
+			listaAptidaoIteracoes = new ArrayList<Double>();
+			
+			
+			
+			AG ag = new AG(dados, relatorios);
 			
 			Individuo[] populacao = ag.populacao;
 			SelecaoTorneio torneio = new SelecaoTorneio(populacao, relatorios, dados);
 		
 			while(true){
+				
+				tempo = System.currentTimeMillis();
 				//selecao torneio
 //				ag.proxima_geracao_torneio();
 				
@@ -55,25 +61,34 @@ public class Main {
 				if(melhorQlde < torneio.melhor_Qlde) {
 					melhorQlde = torneio.melhor_Qlde;
 				}
-								
-				epocas++;
-				if(epocas == 10)break;
 				
-				soma += melhorQlde;
+				listaAptidaoIteracoes.add(melhorQlde);
+
+				tempo = System.currentTimeMillis() - tempo;
+				tempoTotal += tempo/1000;
+				
+				geracao++;
+				if(geracao == 300)break;
+
 			}
 			
-			soma += melhorQlde;
+			System.out.println("\nValores Iteracoes - " + execucoes);
+			for (int j = 0; j < listaAptidaoIteracoes.size(); j++) {
+				System.out.println(listaAptidaoIteracoes.get(j));
+			}
 			
-			tempo = System.currentTimeMillis() - tempo;
-			tempoTotal += tempo/1000;
-						
-			repetir++;
-//			if(repetir == 20)break;
-
-			System.out.println(melhorQlde);
+			listaAptidaoResultados.add(melhorQlde);
+			
+			execucoes++;
+			if(execucoes == 20)break;
 		
-//	}
-		System.out.println("\n" + soma/repetir);
-		System.out.println("\n" + tempoTotal);
+	}
+		System.out.println("\nValores Resultados");
+		for (int k = 0; k < listaAptidaoResultados.size(); k++) {
+			System.out.println(listaAptidaoResultados.get(k));
+		}
+		
+		System.out.println("\nTempo Resultados");
+		System.out.println(tempoTotal);
 	}
 }

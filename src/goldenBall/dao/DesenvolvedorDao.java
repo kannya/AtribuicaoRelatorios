@@ -15,8 +15,13 @@ public class DesenvolvedorDao {
 		Connection conn = ConnectionJDBC.getConexao();
 		
 		try{
+			//7 relatorios (18619,18649,19207,19286,19356,19840,19995)
+			//8 relatorios (18619,18649,19207,19286,19356,19840,19995,20135)
+			//9 relatorios (18619,18649,19207,19286,19356,19840,19995,20135,20658)
+			//10 relatorios (18619,18649,19207,19286,19356,19840,19995,20135,20658, 21941)
+			//20 relatorios (18619, 18649, 19207, 19286, 19356, 19840, 19995, 20135, 20658, 21713,21715,21718,21848,21935,21940,21941,21943,21972,22193)
 			String sql = "select distinct id_usuario, id_relatorio, afinidade, carga_trabalho "
-					+ "from metricas_afinidade where rodada = " + rodadaAtual + " order by id_relatorio";
+					+ "from metricas_afinidade where id_relatorio in (18619, 18649, 19207, 19286, 19356, 19840, 19995, 20135, 20658, 21941) and rodada = " + rodadaAtual + " order by id_relatorio";
 
 		    PreparedStatement stmt = conn.prepareStatement(sql);
 

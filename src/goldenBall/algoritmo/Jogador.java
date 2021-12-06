@@ -15,7 +15,6 @@ public class Jogador implements Comparable<Object>{
 	
 	private ArrayList<Desenvolvedor> genes;
 	private double qualidade;
-	private String nome;
 	private int melhora = 0;
 	private int aposentadoria = 0;
 	
@@ -41,14 +40,6 @@ public class Jogador implements Comparable<Object>{
 
 	public void setMelhora(int melhora) {
 		this.melhora = melhora;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	public ArrayList<Desenvolvedor> getGenes() {

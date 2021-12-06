@@ -10,6 +10,7 @@ import goldenBall.logica.Relatorio;
 public class Individuo {
 	public ArrayList<Desenvolvedor> genes = new ArrayList<Desenvolvedor>();
 	public double aptidao = 0.0;
+	public int melhora = 0;
 
 	// len quantidade de relatorios no genes
 	// ideal para ser chamado na primeira geracao
@@ -31,6 +32,10 @@ public class Individuo {
 		aptidao = 0.0;
 		
 		geraAptidao(genes);
+	}
+	
+	public Individuo() {
+
 	}
 
 	public static Individuo cruzamento(Individuo a, Individuo b) {
@@ -87,6 +92,14 @@ public class Individuo {
 
 	public double getAptidao() {
 		return aptidao;
+	}
+
+	public int getMelhora() {
+		return melhora;
+	}
+
+	public void setMelhora(int melhora) {
+		this.melhora = melhora;
 	}
 	
 }

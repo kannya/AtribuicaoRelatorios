@@ -14,9 +14,9 @@ import interfacesUsuarioGB.Resultados;
 import interfacesUsuarioGB.Treinamento;
 import util.observer.local.LocalObservable;
 
-public class AlgorithmCallerGB extends Thread implements Runnable, ILocalObservable {
+public class AlgorithmCallerGB extends Thread implements Runnable{
 	
-	private LocalObservable observable;
+//	private LocalObservable observable;
 	private String numExecucoes;
 	private String temp;
 	private String times;
@@ -34,12 +34,12 @@ public class AlgorithmCallerGB extends Thread implements Runnable, ILocalObserva
 	
 	//(numero, temporada, times, jogadores) 
 	public AlgorithmCallerGB(String n, String t, String tm, String p){ //2
-		observable = new LocalObservable();
+//		observable = new LocalObservable();
 		this.melhorJogador = new Jogador();
 		
 		this.numExecucoes = n;
-		this.addLocalObserver(Resultados.obtResultados());
-		this.addLocalObserver(Estatistica.obtEstatisticas());
+//		this.addLocalObserver(Resultados.obtResultados());
+//		this.addLocalObserver(Estatistica.obtEstatisticas());
 		this.temp = t;
 		this.times = tm;
 		this.jogadores = p;
@@ -89,14 +89,14 @@ public class AlgorithmCallerGB extends Thread implements Runnable, ILocalObserva
 					max = j.getQualidade();
 					this.melhorJogador = j;
 				}
-		    	this.notifyLocalObservers(j.getQualidade());
-		    	ArrayList<Double> l = new ArrayList<Double>();
-		    	l.add(Math.rint((total/(i+1))*100)/100);
-		    	l.add(min);
-		    	l.add(max);
-		    	l.add(Math.rint((tempoTotal/(i+1))*100)/100);
+//		    	this.notifyLocalObservers(j.getQualidade());
+//		    	ArrayList<Double> l = new ArrayList<Double>();
+//		    	l.add(Math.rint((total/(i+1))*100)/100);
+//		    	l.add(min);
+//		    	l.add(max);
+//		    	l.add(Math.rint((tempoTotal/(i+1))*100)/100);
 		    	
-		    	this.notifyLocalObservers(l);
+//		    	this.notifyLocalObservers(l);
 		    
 	    	}
 			
@@ -130,17 +130,17 @@ public class AlgorithmCallerGB extends Thread implements Runnable, ILocalObserva
     	System.out.println("\n\n\nFim da Execução");
 	}	
 	
-    public void addLocalObserver(Observer observer) {
-        observable.addObserver(observer);
-    }
-
-    public void deleteLocalObserver(Observer observer) {
-        observable.deleteObserver(observer);
-    }
-    
-    public void notifyLocalObservers(Object arg) { //36
-        observable.setChanged();
-        observable.notifyObservers(arg);
-    }
+//    public void addLocalObserver(Observer observer) {
+//        observable.addObserver(observer);
+//    }
+//
+//    public void deleteLocalObserver(Observer observer) {
+//        observable.deleteObserver(observer);
+//    }
+//    
+//    public void notifyLocalObservers(Object arg) { //36
+//        observable.setChanged();
+//        observable.notifyObservers(arg);
+//    }
     
 }

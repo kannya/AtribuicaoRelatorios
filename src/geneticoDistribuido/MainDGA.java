@@ -13,19 +13,25 @@ public class MainDGA {
 	
 	public static void main(String[] args) {
 		int execucoes = 0;
-		int qtdeSubPopulacao = 6;
+		int qtdeSubPopulacao = 8;
 		int qtdeIndividuos = 48;
-		ArrayList<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
-		ArrayList<Relatorio> relatorios = new ArrayList<Relatorio>();
+		int numExecucoes = 100;
+		
 		ArrayList<Double> listaAptidaoResultados = new ArrayList<Double>();
 		ArrayList<Double> listaAptidaoIteracoes;
+		Individuo melhorIndividuo = new Individuo();
 		double tempoTotal = 0;
 		double tempo = 0;
-		Dados dados;
-			
+		
+		int tamSubPopulacao = qtdeIndividuos/qtdeSubPopulacao;
+		
+		ArrayList<Desenvolvedor> desenvolvedores = new ArrayList<Desenvolvedor>();
+		ArrayList<Relatorio> relatorios = new ArrayList<Relatorio>();
 		DesenvolvedorDao dao = new DesenvolvedorDao();
 		RelatorioDao relDao = new RelatorioDao();
 		RodadaAtualDao rodadaAtualDao = new RodadaAtualDao();
+		
+		Individuo individuo = new Individuo();
 		
 		try {
 			desenvolvedores = dao.listaDesenvolvedores(rodadaAtualDao.buscaRodadaAtual());
@@ -33,58 +39,34 @@ public class MainDGA {
 		}finally {
 	
 		}
-	
-		dados = new Dados(desenvolvedores, relatorios);
+		
+		DGA dga = new DGA(desenvolvedores, relatorios);
 		
 		while(true){
-			int tamSubPopulacao = qtdeIndividuos/qtdeSubPopulacao;
-			Individuo e;
+			
+			double max = Double.MIN_VALUE;
 			int geracao = 0;
-			double melhorQlde = Double.MIN_VALUE;
-			ArrayList<Desenvolvedor> melhorJogador = new ArrayList<Desenvolvedor>();
-			
 			listaAptidaoIteracoes = new ArrayList<Double>();
-			
-			DGA dga = new DGA(dados, relatorios, qtdeSubPopulacao, tamSubPopulacao);
-			
-			//cria as primeiras subpopulaçções aleatérias
-			Subpopulacao[] populacao = new Subpopulacao[qtdeSubPopulacao];
-						
-			populacao = dga.populacao;
 			
 			//enquanto o critério de para não for atingido
 			while(true){
-							
+
 				tempo = System.currentTimeMillis();
-				//para cada subpopulacao
-				for (int i = 0; i < qtdeSubPopulacao; i++) {
-					Subpopulacao novaPopulacao = new Subpopulacao(tamSubPopulacao);
-					
-					//cria nova populacao
-					novaPopulacao = dga.novaGeracao(populacao[i]);
-					
-					//passar colecao de individuos devolve uma nova subpopulacao
-					novaPopulacao = dga.mutacao(novaPopulacao);
-
-					//garante que o melhor individo(solucao) estara na proxima subpopulacao
-					populacao[i] = dga.sobrevivente(populacao[i], novaPopulacao);
-
-					if(melhorQlde < populacao[i].individuos[0].aptidao) {
-						melhorQlde = populacao[i].individuos[0].aptidao;
-						melhorJogador = populacao[i].individuos[0].genes;
-					}
-					
-				}
 				
-				listaAptidaoIteracoes.add(melhorQlde);
-				
-				dga.migracao(populacao);
-				
+				individuo = dga.executarInstancia(qtdeSubPopulacao, tamSubPopulacao);
+	
 				tempo = System.currentTimeMillis() - tempo;
     			tempoTotal += tempo/1000;
-				
+    			
+    			if(individuo.getAptidao() > max) {
+    				max = individuo.getAptidao();
+    				melhorIndividuo = individuo;
+    			}
+    			
+    			listaAptidaoIteracoes.add(max);
+    			
 				geracao++;
-				if(geracao == 100)break;
+				if(geracao == numExecucoes)break;
 				
 			}
 			
@@ -93,9 +75,9 @@ public class MainDGA {
 				System.out.println(listaAptidaoIteracoes.get(j));
 			}
 			
-			System.out.println("\nMelhor Jogador: " + melhorJogador);
+			System.out.println("\nMelhor Individuo: " + melhorIndividuo.genes);
 			
-			listaAptidaoResultados.add(melhorQlde);
+			listaAptidaoResultados.add(max);
 			
 			execucoes++;
 			if(execucoes == 20)break;
@@ -108,7 +90,7 @@ public class MainDGA {
 		}
 		
 		System.out.println("\nTempo Resultados");
-		System.out.println(tempoTotal);
+		System.out.println(tempoTotal/execucoes);
 	}
 
 }

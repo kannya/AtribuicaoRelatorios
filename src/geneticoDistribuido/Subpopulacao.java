@@ -18,6 +18,8 @@ public class Subpopulacao {
 		for (int i = 0; i < individuos.length; i++) {
 			individuos[i] = new Individuo(rel.size(), dados);
 		}
+		
+		ordenaPopulacao();
 	}
 
 	//cria uma população com indivíduos sem valor, será composto posteriormente
@@ -73,16 +75,17 @@ public class Subpopulacao {
         }
     }
     
+    //Função para calcular a aptidao da subpopulacao, para isso faz a média dos 10 melhores individuos
     public double getMediaAptidao() {
-        double media = getSomaDaAptidao() / getNumIndividuos();
+        double media = getSomaDaAptidao() / 10;
         return media;
     }
     
     private double getSomaDaAptidao() {
 		double soma = 0.0;
 		
-		for (Individuo s : individuos) {
-			soma += s.getAptidao();
+		for (Individuo ind : individuos) {
+			soma += ind.getAptidao();
 		}
 		return soma;
 	}

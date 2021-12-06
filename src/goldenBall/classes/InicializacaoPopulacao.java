@@ -26,13 +26,11 @@ public class InicializacaoPopulacao extends InicializarPopulacao{
 		int JogadorCont = 0;
 		
 		
-		//O RESTO DOS JOGADORES SERÁ FORMADO RANDOMICAMENTE, CRIANDO O QUE SE CHAMA "CANTERA"
+		//CRIA JOGADORES RANDOMICAMENTE
 		for (int i = 0; i < numDeJogadores; i++) {
 			jogadoresCriadosRandomicamente.add(this.criarJogadores(desenvolvedores, relatorios));
 		}
-		
-		//NESTE PONTO DO PROCESSO TEMOS TODA A POPULAÇÃO DE JOGADORES CRIADA, COM 50% DOS JOGADORES CRIADOS COM FUNÇÕES DE
-		//INICIALIZAÇÃO E OS OUTROS 50% CRIADOS ALEATÓRIOS, AGORA É A VINDA DE CRIAÇÃO DE EQUIPES
+
 		//Criação de equipes
 		for(int i = 0; i < tN; i++){
 

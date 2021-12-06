@@ -2,21 +2,16 @@ package goldenBall.logica;
 
 
 import java.util.ArrayList;
-import java.util.Observer;
 
 import goldenBall.algoritmo.Jogador;
 import goldenBall.classes.Problema;
 import goldenBall.dao.DesenvolvedorDao;
 import goldenBall.dao.RelatorioDao;
 import goldenBall.dao.RodadaAtualDao;
-import interfacesUsuarioGB.Estatistica;
-import interfacesUsuarioGB.Resultados;
 import interfacesUsuarioGB.Treinamento;
-import util.observer.local.LocalObservable;
 
-public class AtribuirRelatoriosGB extends Thread implements Runnable, ILocalObservable {
+public class AtribuirRelatoriosGB extends Thread implements Runnable {
 	
-	private LocalObservable observable;
 	private String numExecucoes;
 	private String temp;
 	private String times;
@@ -38,12 +33,8 @@ public class AtribuirRelatoriosGB extends Thread implements Runnable, ILocalObse
 	
 	//(numero, temporada, times, jogadores) 
 	public AtribuirRelatoriosGB(String n, String t, String tm, String p){ //2
-		observable = new LocalObservable();
 		this.melhorJogador = new Jogador();
-		
 		this.numExecucoes = n;
-		this.addLocalObserver(Resultados.obtResultados());
-		this.addLocalObserver(Estatistica.obtEstatisticas());
 		this.temp = t;
 		this.times = tm;
 		this.jogadores = p;
@@ -51,12 +42,9 @@ public class AtribuirRelatoriosGB extends Thread implements Runnable, ILocalObse
 
 	@Override
 	public void run(){ //3
-		double min = Double.MAX_VALUE;
-		double total = 0;
 		double tempo = 0;
 		double tempoTotal = 0;
 		int n = Integer.parseInt(numExecucoes);
-		ArrayList<Double> tempoMedio = new ArrayList<Double>();
 		ArrayList<Double> listaAptidaoResultados = new ArrayList<Double>();
 		ArrayList<Double> listaAptidaoIteracoes;
 		int execucoes = 0;
@@ -92,38 +80,25 @@ public class AtribuirRelatoriosGB extends Thread implements Runnable, ILocalObse
 
     			tempo = System.currentTimeMillis() - tempo;
     			tempoTotal += tempo/1000;
-    			total = total + j.getQualidade();
 
-    			if(j.getQualidade() < min){
-    				min = j.getQualidade();
-    			}
     			if(j.getQualidade() > max){
     				max = j.getQualidade();
     				this.melhorJogador = j;
     			}
-
-    			this.notifyLocalObservers(j.getQualidade());
-    			ArrayList<Double> l = new ArrayList<Double>();
-    			l.add(Math.rint((total/(i+1))*100)/100);
-    			l.add(min);
-    			l.add(max);
-    			l.add(Math.rint((tempoTotal/(i+1))*100)/100);
-
-    			this.notifyLocalObservers(l);
     			
     			listaAptidaoIteracoes.add(max);
 
     		}
 
-    		System.out.println("\nValores Iteracoes - " + execucoes);
-    		for (int j1 = 0; j1 < listaAptidaoIteracoes.size(); j1++) {
-    			System.out.println(listaAptidaoIteracoes.get(j1));
-    		}
+//    		System.out.println("\nValores Iteracoes - " + execucoes);
+//    		for (int j1 = 0; j1 < listaAptidaoIteracoes.size(); j1++) {
+//    			System.out.println(listaAptidaoIteracoes.get(j1));
+//    		}
     		
-    		System.out.println("\nMelhor Jogador: " + this.melhorJogador.getGenes());
+//    		System.out.println("\nMelhor Jogador: " + this.melhorJogador.getGenes());
     		
-    		System.out.println("\nTempo Iteracoes");
-    		System.out.println(tempoTotal);
+//    		System.out.println("\nTempo Iteracoes");
+//    		System.out.println(tempoTotal);
 
     		listaAptidaoResultados.add(max);
 
@@ -141,50 +116,51 @@ public class AtribuirRelatoriosGB extends Thread implements Runnable, ILocalObse
     	System.out.println(tempoTotal/execucoes);
 
 	
-//    		this.melhorSolucao = new ArrayList<Integer>();
-//    		for(Desenvolvedor sol : this.melhorJogador.getGenes()){
-//    			melhorSolucao.add(sol.getIdDesenvolvedor());
-//    		}
+/*    		this.melhorSolucao = new ArrayList<Integer>();
+    		for(Desenvolvedor sol : this.melhorJogador.getGenes()){
+    			melhorSolucao.add(sol.getIdDesenvolvedor());
+    		}
 
-//    		System.out.println(this.melhorJogador.getGenes() + "; " + this.melhorJogador.getQualidade());
+    		System.out.println(this.melhorJogador.getGenes() + "; " + this.melhorJogador.getQualidade());
     		
-//    		System.out.println(this.melhorJogador.getQualidade());
+    		System.out.println(this.melhorJogador.getQualidade());
     		
     		//buscar relatorios
-//    		AtribuicaoRelatoriosDao atribuicaoDao = new AtribuicaoRelatoriosDao();
-//    		ArrayList<Relatorio> idRelatorio = new ArrayList<Relatorio>();
-//
-//    		try {
-//    			for(int r = 0; r < relatorios.size(); r++) {
-//    				idRelatorio = (ArrayList<Relatorio>) this.melhorJogador.getGenes().get(r).getRelatorios();
-//
-//    				atribuicaoDao.atribuirDesenvolvedor(idRelatorio.get(r).getIdRelatorio(), this.melhorSolucao.get(r));			
-//    				atribuicaoDao.mudarStatusAtribuido(idRelatorio.get(r).getIdRelatorio());
-//    				atribuicaoDao.mudarStatusIssues(idRelatorio.get(r).getIdRelatorio());
-//    			}
-//
-//    		}finally {
-//
-//    		}
+    		AtribuicaoRelatoriosDao atribuicaoDao = new AtribuicaoRelatoriosDao();
+    		ArrayList<Relatorio> idRelatorio = new ArrayList<Relatorio>();
+
+    		try {
+    			for(int r = 0; r < relatorios.size(); r++) {
+    				idRelatorio = (ArrayList<Relatorio>) this.melhorJogador.getGenes().get(r).getRelatorios();
+
+    				atribuicaoDao.atribuirDesenvolvedor(idRelatorio.get(r).getIdRelatorio(), this.melhorSolucao.get(r));			
+    				atribuicaoDao.mudarStatusAtribuido(idRelatorio.get(r).getIdRelatorio());
+    				atribuicaoDao.mudarStatusIssues(idRelatorio.get(r).getIdRelatorio());
+    			}
+
+    		}finally {
+
+    		}
 		
-//		execucoes++;
-//		if(execucoes == 100)break;
-//    	}
-//    		System.out.println("\n" + soma/n);
-//    	System.out.println("\n" + tempoTotal);
+		execucoes++;
+		if(execucoes == 100)break;
+    	}
+    		System.out.println("\n" + soma/n);
+    	System.out.println("\n" + tempoTotal);
+*/
 	}	
 	
-    public void addLocalObserver(Observer observer) {
-        observable.addObserver(observer);
-    }
-
-    public void deleteLocalObserver(Observer observer) {
-        observable.deleteObserver(observer);
-    }
-    
-    public void notifyLocalObservers(Object arg) { //36
-        observable.setChanged();
-        observable.notifyObservers(arg);
-    }
+//    public void addLocalObserver(Observer observer) {
+//        observable.addObserver(observer);
+//    }
+//
+//    public void deleteLocalObserver(Observer observer) {
+//        observable.deleteObserver(observer);
+//    }
+//    
+//    public void notifyLocalObservers(Object arg) { //36
+//        observable.setChanged();
+//        observable.notifyObservers(arg);
+//    }
     
 }

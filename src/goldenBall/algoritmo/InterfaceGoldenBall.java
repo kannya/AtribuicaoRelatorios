@@ -4,12 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Observer;
 
 import goldenBall.logica.DataBase;
-import goldenBall.logica.ILocalObservable;
-import interfacesUsuarioGB.Treinamento;
-import util.observer.local.LocalObservable;
 
 /**
  * 
@@ -18,7 +14,7 @@ import util.observer.local.LocalObservable;
  * Esqueleto del algoritmo
  */
 
-public class InterfaceGoldenBall implements ILocalObservable{
+public class InterfaceGoldenBall {
 
 	//Parametros de entrada
 	private int numTimes;
@@ -30,7 +26,6 @@ public class InterfaceGoldenBall implements ILocalObservable{
 	private int temporadaToGo = 0;
 	private int temporadasSemMelhoria = 0;
 	private double melhorSolucao = Integer.MIN_VALUE;
-	private LocalObservable observable;
 	
 	//Atributo liga
 	private ArrayList<Time> liga;
@@ -45,11 +40,10 @@ public class InterfaceGoldenBall implements ILocalObservable{
 	public InterfaceGoldenBall(int tN, int pNFT, int sN, InicializarPopulacao pI, FuncaoAvaliacao fA, FuncaoHelp hFunc){ //10
 		this.numTimes = tN;
 		this.numJogadorPorTime = pNFT;
+		this.numTemporada = sN;
 		this.inicializadorPopulacao = pI;
 		this.funcaoAvaliacao = fA;
 		this.funcaoHelp = hFunc;
-		observable = new LocalObservable();
-		this.addLocalObserver(Treinamento.obtTreinamentos());
 	}
 	
 	//Getters y Setters
@@ -70,12 +64,12 @@ public class InterfaceGoldenBall implements ILocalObservable{
 		this.numJogadorPorTime = numJogadorPorTime;
 	}
 
-	public int getSeasonNumber() {
+	public int getNumTemporada() {
 		return numTemporada;
 	}
 
-	public void setSeasonNumber(int seasonNumber) {
-		numTemporada = seasonNumber;
+	public void setNumTemporada(int numTemporada) {
+		this.numTemporada = numTemporada;
 	}
 
 	public InicializarPopulacao getPopulationInitializer() {
@@ -110,6 +104,7 @@ public class InterfaceGoldenBall implements ILocalObservable{
 		 * FASE INICIAL
 		 *
 		 */
+		
 		//O primeiro é criar a liga, ou seja, criar os jogadores e as equipes, o que será feito com a função de 
 		//inicialização, que retornará o conjunto de equipa
 		this.temporada = 0;
@@ -134,15 +129,11 @@ public class InterfaceGoldenBall implements ILocalObservable{
 				liga.get(j).setPontos(0);
 			}
 			//Agora todas as sessões de treinamento e jogos de uma temporada são executados
-			double qualidadeAnterior = 0.0;
-			double qualidadeCapitaesAnterior = 0.0;
+			double qualidadeAnterior = Double.MIN_VALUE;
+			double qualidadeCapitaesAnterior = Double.MIN_VALUE;
 			for(int l = 0; l < liga.size(); l++){
 				qualidadeAnterior += liga.get(l).getPotencia(); 
 				qualidadeCapitaesAnterior += liga.get(l).getJogadores().get(0).getQualidade();
-			}
-			if (qualidadeAnterior == 0.0){
-				qualidadeAnterior = Double.MIN_VALUE;
-				qualidadeCapitaesAnterior = Double.MIN_VALUE;
 			}
 			
 			this.executeTemporada();
@@ -167,42 +158,37 @@ public class InterfaceGoldenBall implements ILocalObservable{
 			}
 			i++;			
 		}while(temporadasSemMelhoria < 1);
+		
 		/**
 		 * 
 		 * FASE FINAL
 		 * 
 		 */	
-		//Este é o ponto final da execução, começa a cerimônia da bola de ouro, na qual o melhor jogador do 
-		//campeonato será decorado e é o que é devolvido do processo.
-		ArrayList<Double> treinamentos = new ArrayList<Double>();
-		treinamentos.add((double)this.TreinamPerson);
-		treinamentos.add((double)this.numTreinamento);
-		this.notifyLocalObservers(treinamentos);
-//		System.out.println();
-//		System.out.println("Melhor Solução: " + this.goldenBallCerimonia().getQualidade());
+		
+		for(int k = 0; k < liga.size(); k++){
+			Collections.sort(liga.get(k).getJogadores());
+		}
 		
 		return this.goldenBallCerimonia();
+		
+		
 	}
 	
-	private void atualizarInterface(int i) { //33
-		this.temporada = i+1;
+	private void atualizarInterface(int i) {
+		this.temporada = i + 1;
 		double q = Double.MIN_VALUE;
 		//Cada equipe é monitorada
 		for(int j = 0; j < liga.size(); j++){
 			//De cada equipe, cada jogador é rastreado
-			if(liga.get(j).getHistorico() > q){
+			if(liga.get(j).getHistorico( ) <q){
 				q = liga.get(j).getHistorico();
 			}
 		}
-		if(q > this.melhorSolucao){
+		if(q < this.melhorSolucao){
 			this.melhorSolucao = q;
-			this.temporadaToGo = 0;
-		}else{
-			this.temporadaToGo++;
 		}
-		this.notifyLocalObservers(this);
 	}
-
+	
 	//Este método executa todas as etapas de uma temporada, sessões de treinamento, jogos e transferências
 	@SuppressWarnings("unchecked")
 	private void executeTemporada() { //20
@@ -251,7 +237,6 @@ public class InterfaceGoldenBall implements ILocalObservable{
 	}
 
 	private void intercambiarJogador(int i, int j) { //24
-//		System.out.println("Uma troca de equipe " + this.liga.get(i).getNome() + " para o jogador " + this.liga.get(i).getJogadores().get(j).getNome());
 		
 		int timeIndice = new Double(Math.random() * this.liga.size()).intValue();
 		while(timeIndice == i){
@@ -282,8 +267,6 @@ public class InterfaceGoldenBall implements ILocalObservable{
 		for(int i = liga.size()/2; i < liga.size();i++){
 			int indice1 = new Double(Math.random() * (DataBase.funcoes.length)).intValue();
 			
-//			System.out.println(DataBase.funcoes[indice1].toString());
-			
 			liga.get(i).setModoTreinamento(DataBase.funcoes[indice1]);
 		}
 		
@@ -295,8 +278,7 @@ public class InterfaceGoldenBall implements ILocalObservable{
 	private void partidaRapida(Time time, Time time2) {	//27
 		int golsTime1 = 0;
 		int golsTime2 = 0;
-		//Fazemos um for com 10 porque há 10 jogadores por equipe
-		//compara as qualidades dos jogadores
+		
 		for(int i = 0; i < time.getJogadores().size(); i++){
 			//se a qualidade do jogador do time for menor que o do time2 o time2 marca gol 
 			if(time.getJogadores().get(i).getQualidade() < time2.getJogadores().get(i).getQualidade()){
@@ -371,16 +353,4 @@ public class InterfaceGoldenBall implements ILocalObservable{
 		return this.numTreinamento;
 	}
 	
-    public void addLocalObserver(Observer observer) {
-        observable.addObserver(observer);
-    }
-
-    public void deleteLocalObserver(Observer observer) {
-        observable.deleteObserver(observer);
-    }
-    
-    public void notifyLocalObservers(Object arg) {
-        observable.setChanged();
-        observable.notifyObservers(arg);
-    }
 }

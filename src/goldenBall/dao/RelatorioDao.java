@@ -20,7 +20,11 @@ public class RelatorioDao {
 			//9 relatorios (18619,18649,19207,19286,19356,19840,19995,20135,20658)
 			//10 relatorios (18619,18649,19207,19286,19356,19840,19995,20135,20658,21941)
 			//20 relatorios (18619, 18649, 19207, 19286, 19356, 19840, 19995, 20135, 20658, 21713,21715,21718,21848,21935,21940,21941,21943,21972,22193)
-			String sql = "select id, id_relatorio, esforco from esforco e where status = 1 and id_relatorio in (18619, 18649, 19207, 19286, 19356, 19840, 19995, 20135, 20658, 21941) order by id_relatorio";
+			String sql = "select id, id_relatorio, esforco from esforco e where status = 1 and id_relatorio in (18619,18649,19207,19286,19356,19840,19995) order by id_relatorio";
+//			String sql = "select id, id_relatorio, esforco from esforco e where status = 1 and id_relatorio in (18619,18649,19207,19286,19356,19840,19995,20135) order by id_relatorio";
+//			String sql = "select id, id_relatorio, esforco from esforco e where status = 1 and id_relatorio in (18619,18649,19207,19286,19356,19840,19995,20135,20658) order by id_relatorio";
+//			String sql = "select id, id_relatorio, esforco from esforco e where status = 1 and id_relatorio in (18619,18649,19207,19286,19356,19840,19995,20135,20658,21941) order by id_relatorio";
+			
 
 		    PreparedStatement stmt = conn.prepareStatement(sql);
 

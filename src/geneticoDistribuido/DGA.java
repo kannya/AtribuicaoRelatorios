@@ -44,84 +44,81 @@ public class DGA{
 	
 	public Individuo execute() {
 
-		for (int i = 0; i < qtdeSubpopulacao; i++) {
-			Subpopulacao novaPopulacao = new Subpopulacao(tamSubpopulacao);
+		Subpopulacao[] novaPopulacao = new Subpopulacao[qtdeSubpopulacao];
 			
+		do {
 			//cria nova populacao
-			novaPopulacao = novaGeracao(populacao[i]);
-			
-			do {
-							
-				double aptidaoAnterior = Double.MIN_VALUE;;
-				for(int l = 0; l < populacao.length; l++){
-					aptidaoAnterior += populacao[l].getMediaAptidao();
-				}
-				
-				//passar colecao de individuos devolve uma nova subpopulacao
-				novaPopulacao = mutacao(novaPopulacao);
-				
-				for(int j = 0; j < novaPopulacao.individuos.length; j++){
-					//TEM SIDO, ASSIM UMA MUDANÇA É FEITA EM SEUS GENES
-					if(novaPopulacao.individuos[j].getMelhora() == 10){
-						novaPopulacao.individuos[j].setMelhora(0);
-						trocarGenes(i, j);
-					}
-				}
-				
-				//garante que o melhor individo(solucao) estara na proxima subpopulacao
-				populacao[i] = sobrevivente(populacao[i], novaPopulacao);
-				
-				double aptidaoPosterior = 0.0;
-				for(int l = 0; l < populacao.length;l++){
-					aptidaoPosterior += populacao[l].getMediaAptidao(); 
-				}
-				
-				//verifica aptidao da subpopulação
-				if(aptidaoPosterior < aptidaoAnterior){
-					semMelhoria = 0;
-				}else{
-					semMelhoria++;
-				}
-				
-								//verifica a aptidao do individuo
-				double melhorAptidaoAnterior = this.melhorAptidao;
-				melhorSolucao();
-				if(this.melhorAptidao < melhorAptidaoAnterior){
-					semMelhoria = 0;
-				}
-				
-			}while(semMelhoria < 1);
-		}
-		
+			novaPopulacao = novaGeracao(populacao);
+
+
+			double aptidaoAnterior = Double.MIN_VALUE;;
+			for(int i = 0; i < populacao.length; i++){
+				aptidaoAnterior += populacao[i].getMediaAptidao();
+			}
+
+			//passar colecao de individuos devolve uma nova subpopulacao
+			novaPopulacao = executaMutacao(novaPopulacao);
+
+			//garante que os melhores individos (solucao) estarão na proxima populacao
+			populacao = sobrevivente(populacao, novaPopulacao);
+
+			double aptidaoPosterior = 0.0;
+			for(int j = 0; j < populacao.length; j++){
+				aptidaoPosterior += populacao[j].getMediaAptidao(); 
+			}
+
+			//verifica aptidao da subpopulação
+			if(aptidaoPosterior < aptidaoAnterior){
+				semMelhoria = 0;
+			}else{
+				semMelhoria++;
+			}
+
+			//verifica a aptidao do individuo
+			double melhorAptidaoAnterior = this.melhorAptidao;
+			melhorSolucao();
+			if(this.melhorAptidao < melhorAptidaoAnterior){
+				semMelhoria = 0;
+			}
+
+		}while(semMelhoria < 1);
+
 		migracao();
-		
+
 		for(int j = 0; j < qtdeSubpopulacao; j++){
 			populacao[j].ordenaPopulacao();
 		}
-		
+
 		return melhorSolucao();
 	}
 	
-	public Subpopulacao novaGeracao(Subpopulacao subPop) {
-             
+	public Subpopulacao[] novaGeracao(Subpopulacao[] subPop) {
+           
 		//cria nova população do mesmo tamanho da antiga
-		Subpopulacao novaPopulacao = new Subpopulacao(this.tamSubpopulacao);
+		Subpopulacao[] novaPopulacao = new Subpopulacao[this.qtdeSubpopulacao];
 		
-		while (novaPopulacao.getNumIndividuos() < this.tamSubpopulacao) {
-			Individuo[] pais = new Individuo[2];
-			//seleciona os 2 pais por torneio
-			pais[0] = selecaoTorneio(subPop);
-			pais[1] = selecaoTorneio(subPop);
-
-			Individuo filho;
+		for (int i = 0; i < this.qtdeSubpopulacao; i++) {
 			
-			filho = Individuo.cruzamento(pais[0], pais[1]);
-			//adiciona os filhos na nova geração
-			novaPopulacao.setIndividuo(filho);
-		}
+			novaPopulacao[i] = new Subpopulacao(tamSubpopulacao);
+			
+			for (int j = 0; j < this.qtdeSubpopulacao; j++) {
+				while (novaPopulacao[i].getNumIndividuos() < this.tamSubpopulacao) {
+					Individuo[] pais = new Individuo[2];
+					//seleciona os 2 pais por torneio
+					pais[0] = selecaoTorneio(subPop[i]);
+					pais[1] = selecaoTorneio(subPop[i]);
 		
-		//ordena a nova população
-		novaPopulacao.ordenaPopulacao();
+					Individuo filho;
+					
+					filho = Individuo.cruzamento(pais[0], pais[1]);
+					//adiciona os filhos na nova geração
+					novaPopulacao[i].setIndividuo(filho);
+				}
+				
+				//ordena a nova população
+				novaPopulacao[i].ordenaPopulacao();
+			}
+		}
 		return novaPopulacao;
     }
 
@@ -142,27 +139,50 @@ public class DGA{
         return subPopulacaoIntermediaria.getIndivduo(0);
     }
 	
-	public Subpopulacao mutacao(Subpopulacao subPop) {
-		Subpopulacao novaSubpopulacao = subPop;
-		Individuo individuo = null;
-		int qtdeFuncoes = 4;
-		boolean melhorou = false;
-		int indiceFuncao = 0;
-		
+	public Subpopulacao[] executaMutacao(Subpopulacao[] Pop) {
+		Subpopulacao[] novaPop = Pop;
+	
 		for(int vuelta = 0; vuelta < 2; vuelta++){
 					
-			int nMut = (int) Math.round(Math.random()*(novaSubpopulacao.individuos.length));
-			
-			for (int k = 0; k < novaSubpopulacao.individuos.length; k++) {
-				melhorou = false;
+			for (int k = 0; k < qtdeSubpopulacao; k++) {
 				
-				for(int i = 0; i < nMut; i++) {
-	//		    	int indiceIndividuo = (int) Math.round(Math.random()*(nMut - 1));
-			    	if(qtdeSubpopulacao == 1){
-			    		indiceFuncao = (int) Math.round(Math.random()*(qtdeFuncoes - 1));
-			    	}
-			    	ArrayList<Desenvolvedor> novoGenes = new ArrayList<Desenvolvedor>();
-			    	    	
+				for (int i = 0; i < qtdeSubpopulacao; i++) {
+				
+					novaPop[i] = mutacao(novaPop[i]);
+					
+					for(int j = 0; j < tamSubpopulacao; j++){
+						//TEM SIDO, ASSIM UMA MUDANÇA É FEITA EM SEUS GENES
+						if(novaPop[i].individuos[j].getMelhora() == 10){
+							novaPop[i].individuos[j].setMelhora(0);
+							trocarGenes(i, j);
+						}
+					}
+				}
+			}
+			
+			for(int l = 0; l < qtdeSubpopulacao; l++) {
+				novaPop[l].ordenaPopulacao();
+			}
+			
+		}
+				
+	    return novaPop;
+
+	}
+	
+	public Subpopulacao mutacao(Subpopulacao subPop) {
+		Subpopulacao novaSubpopulacao = subPop;
+		ArrayList<Desenvolvedor> novoGenes = new ArrayList<Desenvolvedor>();
+		Individuo individuo = null;
+		boolean melhorou = false;
+		int indiceFuncao = 0;
+			
+			for (int k = 0; k < tamSubpopulacao; k++) {
+				melhorou = false;
+				indiceFuncao = k;
+				int j = 0;
+
+				do {
 					if(indiceFuncao == 0) {
 						Opt2 opt2 = new Opt2();
 						novoGenes = opt2.criarSucessor(novaSubpopulacao.individuos[k]);
@@ -170,33 +190,46 @@ public class DGA{
 						Opt3 opt3 = new Opt3();
 						novoGenes = opt3.criarSucessor(novaSubpopulacao.individuos[k]);
 					}else if(indiceFuncao == 2) {
+						Opt3AndOpt2 opt3AndOpt2 = new Opt3AndOpt2();
+						novoGenes = opt3AndOpt2.criarSucessor(novaSubpopulacao.individuos[k]);
+					}else if(indiceFuncao == 3) {
 						RandomInsertion insertion = new RandomInsertion();
 						novoGenes = insertion.criarSucessor(novaSubpopulacao.individuos[k]);
-					}else if(indiceFuncao == 3) {
+					}else if(indiceFuncao == 4) {
+						Opt3AndInsertion opt3AndInsertion = new Opt3AndInsertion();
+						novoGenes = opt3AndInsertion.criarSucessor(novaSubpopulacao.individuos[k]);
+					}else if(indiceFuncao == 5) {
+						Opt2AndInsertion opt2AndInsertion = new Opt2AndInsertion();
+						novoGenes = opt2AndInsertion.criarSucessor(novaSubpopulacao.individuos[k]);
+					}else if(indiceFuncao == 6) {
 						Swapping swapping = new Swapping();
 						novoGenes = swapping.criarSucessor(novaSubpopulacao.individuos[k]);
+					}else if(indiceFuncao == 6) {
+						RandomInsertion randomInsertion = new RandomInsertion();
+						novoGenes = randomInsertion.criarSucessor(novaSubpopulacao.individuos[k]);
 					}
-					
+
 					individuo = new Individuo(novoGenes);
-					
+
 					if(individuo.getAptidao() > novaSubpopulacao.individuos[k].aptidao) {
 						novaSubpopulacao.individuos[k] = individuo;
 						melhorou = true;
+						j = 0;
+					}else {
+						j++;
 					}
-			    }
-				
+				}while(j < tamSubpopulacao/2);
+
 				if (melhorou == false){
 					novaSubpopulacao.individuos[k].setMelhora(novaSubpopulacao.individuos[k].getMelhora() + 1);
 				}else{
 					novaSubpopulacao.individuos[k].setMelhora(0);
 				}
-				
+
 				novaSubpopulacao.ordenaPopulacao();
-				
 			}
-		}
-				
-	    return novaSubpopulacao;
+
+		return novaSubpopulacao;
 
 	}
 	
@@ -217,27 +250,31 @@ public class DGA{
 	}
 	
 	//os melhores da nova subpopulacao substituem os piores da subpopulacao inicial
-	public Subpopulacao sobrevivente(Subpopulacao popInicial, Subpopulacao novaPop) {
+	public Subpopulacao[] sobrevivente(Subpopulacao[] popInicial, Subpopulacao[] novaPop) {
 		
-		int tamPopSobrevivente = popInicial.individuos.length;
-		int tamPopTotal = popInicial.individuos.length * 2;
-		Subpopulacao popTotal = new Subpopulacao(tamPopTotal);
-		Subpopulacao popSobrevivente = new Subpopulacao(tamPopSobrevivente);
-				
-		for (int i = 0; i < tamPopSobrevivente; i++) {
-			popTotal.individuos[i] = popInicial.individuos[i];
-		}
+		int tamPopSobrevivente = tamSubpopulacao;
+		int tamPopTotal = tamSubpopulacao * 2;
+		Subpopulacao[] popSobrevivente = new Subpopulacao[qtdeSubpopulacao];
 		
-		int l = 0;		
-		for (int j = tamPopSobrevivente; j < tamPopTotal; j++) {
-			popTotal.individuos[j] = novaPop.individuos[l];
-			l++;
-		}
-		
-		popTotal.ordenaPopulacao();
-		
-		for(int k = 0; k < tamPopSobrevivente; k++) {
-			popSobrevivente.individuos[k] = popTotal.individuos[k];
+		for (int i = 0; i < qtdeSubpopulacao; i++) {
+			Subpopulacao popTotal = new Subpopulacao(tamPopTotal);
+			popSobrevivente[i] = new Subpopulacao(tamPopSobrevivente);
+						
+			for (int j = 0; j < tamPopSobrevivente; j++) {
+				popTotal.individuos[j] = popInicial[i].individuos[j];
+			}
+			
+			int l = 0;		
+			for (int k = tamPopSobrevivente; k < tamPopTotal; k++) {
+				popTotal.individuos[k] = novaPop[i].individuos[l];
+				l++;
+			}
+			
+			popTotal.ordenaPopulacao();
+			
+			for(int m = 0; m < tamPopSobrevivente; m++) {
+				popSobrevivente[i].individuos[m] = popTotal.individuos[m];
+			}
 		}
 		
 		return popSobrevivente;

@@ -21,8 +21,8 @@ public class MainGB {
 		melhorJogador = new Jogador();
 		numExecucoes = 100;
 		temp = 10;
-		times = 8;
-		jogadores = 6;
+		times = 1;
+		jogadores = 24;
 		
 		double tempo = 0;
 		double tempoTotal = 0;

@@ -13,7 +13,7 @@ public class MainDGA {
 	
 	public static void main(String[] args) {
 		int execucoes = 0;
-		int qtdeSubPopulacao = 8;
+		int qtdeSubPopulacao = 2;
 		int qtdeIndividuos = 48;
 		int numExecucoes = 100;
 		

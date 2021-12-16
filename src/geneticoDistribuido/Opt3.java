@@ -193,4 +193,8 @@ public class Opt3{
 		
 		return genesFinal;
 	}
+	
+	public int getNeighboor(int instanciaTam) {
+		return ((instanciaTam - 3) + (Subpopulacao.somatorio(instanciaTam-3)));
+	}
 }

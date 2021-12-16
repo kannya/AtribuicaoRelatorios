@@ -108,6 +108,8 @@ public class Time implements Comparable<Object>{
 		double qualitdade = 0.0;
 		boolean melhorou = false;
 		int treinamento = candidatoTreinamento;
+//		System.out.println("treinamento: " + treinamento);
+//		System.out.println(this.modoTreinamento);
 		int j = 0;
 		for(int i = 0; i < jogadores.size(); i++){
 			melhorou = false;
@@ -127,6 +129,7 @@ public class Time implements Comparable<Object>{
 					this.historico = jogadores.get(i).getQualidade();
 				}
 			}while(j < (treinamento / (jogadores.size()/2)));//6);
+//			}while(j < jogadores.size()/2);
 			if (melhorou == false){
 				this.jogadores.get(i).setMelhora(this.jogadores.get(i).getMelhora() + 1);
 			}else{

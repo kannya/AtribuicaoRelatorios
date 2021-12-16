@@ -2,6 +2,7 @@ package geneticoDistribuido;
 
 import java.util.ArrayList;
 
+import goldenBall.logica.DataBase;
 import goldenBall.logica.Desenvolvedor;
 
 public class Swapping{
@@ -47,5 +48,9 @@ public class Swapping{
 		}
 
 		return genesInicial;
+	}
+	
+	public int getNeighboor(int instanciaTam) { //16
+		return Subpopulacao.somatorio(instanciaTam-2);
 	}
 }

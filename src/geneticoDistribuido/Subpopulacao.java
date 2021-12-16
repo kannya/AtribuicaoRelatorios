@@ -89,5 +89,15 @@ public class Subpopulacao {
 		}
 		return soma;
 	}
+    
+    //Faça a soma de um número
+    public static int somatorio(int num) {
+		int res = 1;
+		while(num != 0){
+			res = res + num;
+			num--;
+		}
+		return res;
+	}
 
 }

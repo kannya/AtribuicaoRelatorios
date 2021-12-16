@@ -2,8 +2,6 @@ package geneticoDistribuido;
 
 import java.util.ArrayList;
 
-import goldenBall.algoritmo.FuncaoSucessoraRandomica;
-import goldenBall.logica.DataBase;
 import goldenBall.logica.Desenvolvedor;
 
 public class Opt3AndOpt2{
@@ -16,4 +14,8 @@ public class Opt3AndOpt2{
 			return new Opt3().criarSucessor(individuo);
 		}
 	}
+	
+	public int getNeighboor(int instanciaTam) {
+		return ((instanciaTam - 3) + (Subpopulacao.somatorio(instanciaTam-3)));
+	}	
 }

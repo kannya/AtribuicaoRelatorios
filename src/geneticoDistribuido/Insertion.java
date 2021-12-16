@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import goldenBall.logica.Desenvolvedor;
 
-public class RandomInsertion{
+public class Insertion{
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<Desenvolvedor> criarSucessor(Individuo individuo) {
@@ -32,5 +32,9 @@ public class RandomInsertion{
 		genesInicial.add(indice2,genes1);		
 		
 		return genesInicial;
+	}
+	
+	public int getNeighboor(int instanciaTam) {
+		return (instanciaTam * (instanciaTam - 2));
 	}
 }

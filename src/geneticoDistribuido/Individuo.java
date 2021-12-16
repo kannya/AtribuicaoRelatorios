@@ -41,6 +41,59 @@ public class Individuo {
 	public static Individuo cruzamento(Individuo a, Individuo b) {
 
 		ArrayList<Desenvolvedor> novoGenes = new ArrayList<Desenvolvedor>();
+		ArrayList<Desenvolvedor> novoGenes2 = new ArrayList<Desenvolvedor>();
+		Individuo segundaMetade = b;
+		Individuo segundaMetade2 = a;
+		ArrayList<Desenvolvedor> segundaMetadeAposRemocao = new ArrayList<Desenvolvedor>();
+		ArrayList<Desenvolvedor> segundaMetadeAposRemocao2 = new ArrayList<Desenvolvedor>();
+		ArrayList<Integer> indices = new ArrayList<Integer>();
+		ArrayList<Integer> indices2 = new ArrayList<Integer>();
+		int k = 0;
+		int l = 0;
+		
+		for(int i = 0; i < a.genes.size()/2; i++){
+			novoGenes.add(a.genes.get(i));
+			novoGenes2.add(b.genes.get(i));
+			
+			while (indices.contains(k)){
+				k = new Double(Math.random() * segundaMetade.genes.size()).intValue();
+			}
+			indices.add(k);
+			
+			while (indices.contains(l)){
+				l = new Double(Math.random() * segundaMetade2.genes.size()).intValue();
+			}
+			indices2.add(l);
+		}
+
+		for (int j = 0; j < segundaMetade.genes.size(); j++) {
+			if (!indices.contains(j)) {
+				segundaMetadeAposRemocao.add(segundaMetade.genes.get(j));
+			}
+		}
+		
+		for (int m = 0; m < segundaMetade2.genes.size(); m++) {
+			if (!indices.contains(m)) {
+				segundaMetadeAposRemocao2.add(segundaMetade2.genes.get(m));
+			}
+		}
+
+		novoGenes.addAll(segundaMetadeAposRemocao);
+		novoGenes2.addAll(segundaMetadeAposRemocao2);
+		
+		Individuo ind = new Individuo(novoGenes);
+		Individuo ind2 = new Individuo(novoGenes2);
+		
+		if(ind.aptidao > ind2.aptidao) {
+			return ind;
+		}else {
+			return ind2;
+		}
+	}
+	
+	public static Individuo cruzamentoTorneio(Individuo a, Individuo b) {
+
+		ArrayList<Desenvolvedor> novoGenes = new ArrayList<Desenvolvedor>();
 		Individuo segundaMetade = b;
 		ArrayList<Desenvolvedor> segundaMetadeAposRemocao = new ArrayList<Desenvolvedor>();
 		ArrayList<Integer> indices = new ArrayList<Integer>();

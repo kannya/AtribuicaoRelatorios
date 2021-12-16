@@ -2,6 +2,7 @@ package geneticoDistribuido;
 
 import java.util.ArrayList;
 
+import goldenBall.logica.DataBase;
 import goldenBall.logica.Desenvolvedor;
 
 public class Opt2{
@@ -77,6 +78,9 @@ public class Opt2{
 		
 		return genesFinal;
 				
+	}
+	public int getNeighboor(int instanciaTam) {
+		return ((instanciaTam - 3) + (Subpopulacao.somatorio(instanciaTam-3)));
 	}
 
 }
